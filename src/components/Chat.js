@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import csvjson from "../csvjson.json";
+import example from "../data/MathDNN.json";
 import { SingleChat } from "./ChatBlock";
 import styled from "styled-components";
 
@@ -19,27 +19,31 @@ const Chat = ({ user }) => {
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    // Fetch messages from JSON file
-    console.log("Fetching messages");
-    setMessages(csvjson);
-    console.log("Done fetching messages");
+    // Fetch messages from the server, TODO
+    setMessages(example);
   }, []);
+
+  useEffect(() => {
+    console.log("Messages: ", messages);
+  }, [messages]);
+
   const handleInputChange = (event) => {
     setNewMessage(event.target.value);
   };
 
   const handleSubmit = (event) => {
-    // Handle form submission, TODO
     console.log("Form submitted");
   };
 
   return (
     <Wrapper>
       <div className="chat-messages">
-        {messages.slice(-20, -1).map((message, index) => {
-          // Display only the last 20 messages
-          return <SingleChat message={message} index={index} />;
-        })}
+        {messages && // Display messages
+          Object.keys(messages)
+            .slice(-20) // Display only the last 20 messages
+            .map((key) => { // key is the index of the message
+              return <SingleChat index={key} message={messages[key]} />;
+            })}
       </div>
     </Wrapper>
   );
