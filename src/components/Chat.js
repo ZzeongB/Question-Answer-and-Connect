@@ -1,10 +1,13 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from "react";
 import example from "../data/MathDNN.json";
 import { SingleChat } from "./ChatBlock";
 import styled from "styled-components";
 import axios from "axios";
+
+// Define a styled component for the chat wrapper
 const Wrapper = styled.main`
-  position: relative;
+  position: fixed;
   top: 50px;
   bottom: 65px;
   left: 0px;
@@ -14,21 +17,23 @@ const Wrapper = styled.main`
   background-color: #ffffff;
 `;
 
+// Define the Chat component
 const Chat = ({ user, messages }) => {
+  console.log("messages", messages.slice(-20))
   return (
     <Wrapper>
       <div className="chat-messages">
-        {messages &&
+        {messages && // Check if messages exist
           messages
             .slice(-20) // Display only the last 20 messages
-            .map((idx, message) => {
-              // key is the index of the message
-              console.log(message, idx);
-              return <SingleChat index={idx} message={messages[message]} />;
+            .map((message, idx) => {
+              // Return a SingleChat component for each message
+              return <SingleChat key = {message.id} index={idx} message={message} />;
             })}
       </div>
     </Wrapper>
   );
 };
 
+// Export the Chat component
 export default Chat;
