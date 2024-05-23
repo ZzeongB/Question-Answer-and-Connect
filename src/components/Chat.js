@@ -1,9 +1,7 @@
 // Import necessary modules and components
 import React, { useState, useEffect } from "react";
-import example from "../data/MathDNN.json";
 import { SingleChat } from "./ChatBlock";
 import styled from "styled-components";
-import axios from "axios";
 
 // Define a styled component for the chat wrapper
 const Wrapper = styled.main`
