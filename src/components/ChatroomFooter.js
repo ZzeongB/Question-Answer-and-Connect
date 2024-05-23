@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.footer`
-  position: fixed;
+  position: auto;
   bottom: 0px;
   left: 0px;
   right: 0px;

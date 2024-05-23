@@ -5,11 +5,15 @@ import React, { useState, useEffect } from "react";
 import Chat from "./components/Chat";
 import Header from "./components/ChatroomHeader";
 import Footer from "./components/ChatroomFooter";
+import ExpandableKeywordList from "./components/ExpandableKeywordList";
 import axios from "axios";
 
 const ChattingScreen = () => {
-  // State to hold chat messages
+  // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
+  const [keywords, setKeywords] = useState([]);
+
+  const [expanded, setExpanded] = useState(false);
 
   // Function to fetch chat messages from server
   const fetchMessages = () => {
@@ -21,6 +25,18 @@ const ChattingScreen = () => {
       })
       .catch((error) => {
         console.error("Failed to fetch chat messages");
+      });
+  };
+
+  const fetchKeywords = () => {
+    axios
+      .get("http://localhost:3000/keyword")
+      .then((response) => {
+        // Update state with fetched messages
+        setKeywords(response.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch keywords");
       });
   };
 
@@ -36,7 +52,7 @@ const ChattingScreen = () => {
       .then((res) => {
         console.log("Chat message sent", res);
         // Update the messages state with the new message
-        setMessages(prevMessages => [...prevMessages, res.data]);
+        setMessages((prevMessages) => [...prevMessages, res.data]);
       })
       .catch((Error) => {
         console.error("Failed to send chat message", Error);
@@ -46,18 +62,31 @@ const ChattingScreen = () => {
   // Fetch messages when component mounts
   useEffect(() => {
     fetchMessages();
+    fetchKeywords();
   }, []);
-
   // Render the chat screen
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent:"space-between" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
       <Header roomName={"Chatroom"} onBack={() => {}} />
       <Chat
         user={"user"}
         style={{ flex: 1, overflow: "auto" }}
         messages={messages}
       />
-      <Footer onChatSumbmit={onChatSubmit} />
+      <div style={{position: "fixed", bottom: "0px", width: "100%"}}>
+        <ExpandableKeywordList
+          keywords={keywords}
+          expanded={expanded}
+          setExpanded={setExpanded}
+        />
+        <Footer onChatSumbmit={onChatSubmit} />
+      </div>
     </div>
   );
 };

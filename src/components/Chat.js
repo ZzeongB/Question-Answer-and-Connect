@@ -7,7 +7,7 @@ import styled from "styled-components";
 const Wrapper = styled.main`
   position: fixed;
   top: 50px;
-  bottom: 65px;
+  bottom: 115px;
   left: 0px;
   right: 0px;
   overflow: auto;
@@ -17,7 +17,6 @@ const Wrapper = styled.main`
 
 // Define the Chat component
 const Chat = ({ user, messages }) => {
-  console.log("messages", messages.slice(-20))
   return (
     <Wrapper>
       <div className="chat-messages">
