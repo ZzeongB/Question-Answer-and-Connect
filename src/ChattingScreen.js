@@ -12,13 +12,12 @@ const ChattingScreen = () => {
   // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
   const [keywords, setKeywords] = useState([]);
-
   const [expanded, setExpanded] = useState(false);
 
   // Function to fetch chat messages from server
   const fetchMessages = () => {
     axios
-      .get("http://localhost:3000/chat")
+      .get("http://localhost:3001/chat")
       .then((response) => {
         // Update state with fetched messages
         setMessages(response.data);
@@ -30,7 +29,7 @@ const ChattingScreen = () => {
 
   const fetchKeywords = () => {
     axios
-      .get("http://localhost:3000/keyword")
+      .get("http://localhost:3001/keyword")
       .then((response) => {
         // Update state with fetched messages
         setKeywords(response.data);
@@ -44,7 +43,7 @@ const ChattingScreen = () => {
   const onChatSubmit = (message) => {
     const date = new Date();
     axios
-      .post("http://localhost:3000/chat", {
+      .post("http://localhost:3001/chat", {
         User: "me",
         Message: message,
         Date: date.toISOString(),
@@ -71,6 +70,7 @@ const ChattingScreen = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        backgroundColor: "rgb(205, 223, 223)",
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
@@ -79,7 +79,7 @@ const ChattingScreen = () => {
         style={{ flex: 1, overflow: "auto" }}
         messages={messages}
       />
-      <div style={{position: "fixed", bottom: "0px", width: "100%"}}>
+      <div style={{position: "fixed", bottom: "0px", width: "100%", backgroundColor:"transparent"}}>
         <ExpandableKeywordList
           keywords={keywords}
           expanded={expanded}

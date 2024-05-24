@@ -7,12 +7,11 @@ const Wrapper = styled.footer`
   left: 0px;
   right: 0px;
   width: 100%;
-  min-height: 50px;
-  max-height: 200px;
+  height: 50px;
   overflow: auto;
   padding: 6px;
   z-index: 0;
-  background-color: #eeeeee;
+  background-color: white;
   & form {
     position: relative;
     display: flex;
@@ -29,12 +28,18 @@ const Wrapper = styled.footer`
       resize: none;
       height: 100%;
       margin: 0;
-      padding: 5px 20px;
+      font-size: 15px;
+      padding: 10px;
     }
     & button {
       width: 50px;
-      height: 40px;
+      height: 30px;
       background: #ffeb33;
+      border-radius: 8px;
+      position: absolute;
+      right: 10px;
+      bottom: 3px;
+      font-size: 15px;
       &.canSubmit {
         cursor: pointer;
         pointer-events: all;

@@ -17899,13 +17899,12 @@
       "Date": "2024-05-23T08:26:21.380Z"
     }
   ],
-  "keyword": [
-    "keyword1",
-    "keyword2",
-    "keyword3",
-    "keyword4",
-    "keyword5",
-    "keyeyeyeyeyeyeyeyeyeyeee",
-    "keyeyeyeyeyeyeyeyeyeyeeekeyeyeyeyeyeyeyeyeyeyeee"
-  ]
+  "keyword": {
+    "keyword1": {"backgroundColor": "#FFD1DC", "textColor": "#000000"}, 
+    "keyword2": {"backgroundColor": "#B2EBF2", "textColor": "#000000"},
+    "keyword3": {"backgroundColor": "#DCE775", "textColor": "#000000"},
+    "keyword4": {"backgroundColor": "#FFF59D", "textColor": "#000000"}, 
+    "keyword5": {"backgroundColor": "#E1BEE7", "textColor": "#000000"}, 
+    "keyword6": {}  
+  }
 }

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const HeaderWrapper = styled.header`
   position: fixed;
   width: 100%;
-  background-color: #ffffff;
+  background-color: rgb(205, 223, 223);
   height: 50px;
   display: flex;
   align-items: center;
@@ -15,14 +15,17 @@ const HeaderWrapper = styled.header`
   & span {
     font-weight: bold;
     font-size: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   & button {
     font-size: 20px;
     padding: 10px;
-    background-color: #ffffff;
     border: none;
     cursor: pointer;
+    background-color: transparent;
 
     &:hover {
       color: #dcdcdc;
@@ -33,7 +36,7 @@ const HeaderWrapper = styled.header`
 const Header = ({ roomName, onBack }) => {
   return (
     <HeaderWrapper>
-      <button onClick={onBack}>Back</button>
+      <button onClick={onBack}>{"<"}</button>
       <span>{roomName}</span>
     </HeaderWrapper>
   );

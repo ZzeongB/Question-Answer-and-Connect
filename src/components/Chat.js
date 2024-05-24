@@ -1,19 +1,20 @@
 // Import necessary modules and components
 import React, { useState, useEffect } from "react";
-import { SingleChat } from "./ChatBlock";
+import { SingleChat } from "./SingleChat";
 import styled from "styled-components";
 
 // Define a styled component for the chat wrapper
 const Wrapper = styled.main`
   position: fixed;
   top: 50px;
-  bottom: 115px;
+  bottom: 50px;
   left: 0px;
   right: 0px;
   overflow: auto;
   width: 100%;
-  background-color: #ffffff;
-`;
+  background-color: rgb(205, 223, 223);
+  padding-bottom: 60px;
+  `;
 
 // Define the Chat component
 const Chat = ({ user, messages }) => {
@@ -25,7 +26,14 @@ const Chat = ({ user, messages }) => {
             .slice(-20) // Display only the last 20 messages
             .map((message, idx) => {
               // Return a SingleChat component for each message
-              return <SingleChat key = {message.id} index={idx} message={message} />;
+              return (
+                <SingleChat
+                  key={message.id}
+                  index={idx}
+                  message={message}
+                  user={user}
+                />
+              );
             })}
       </div>
     </Wrapper>
