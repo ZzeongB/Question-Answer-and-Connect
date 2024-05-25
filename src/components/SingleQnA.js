@@ -36,30 +36,32 @@ const LeftBlock = styled(BaseBlock)`
   }
 `;
 
-const NameBlock = styled.div` 
+const NameBlock = styled.div`
   margin-bottom: 5px;
   font-size: 14px;
-  color: rgb(0, 0, 0, 0.5); 
+  color: rgba(0, 0, 0, 0.5);
 `;
 
-export const SingleChat = ({ index, message, user, tag, is_question, parent_id }) => {
-  // messages : [{User: "user", Message: "message", Date: "date"}]
-  if (user == message.User) {
-    return (
-      <RightBlock key={index}>
-        <NameBlock>{message.User}</NameBlock>
-        <ChatWrapper>
-          {message.Message}
-        </ChatWrapper>
-      </RightBlock>
-    );
-  }
+const TagBlock = styled.div`
+  margin-top: 3px;
+  font-size: 12px;
+  color: #888;
+`;
+
+const SingleQnA = ({ index, message, user, tag, is_question, parent_id, onClick }) => {
+  const isUserMessage = user === message.User;
+  
+  const MessageBlock = is_question ? RightBlock : LeftBlock;
+
   return (
-    <LeftBlock key={index}>
+    <MessageBlock key={index} onClick={is_question ? onClick : undefined} style={{ cursor: is_question ? 'pointer' : 'default' }}>
       <NameBlock>{message.User}</NameBlock>
       <ChatWrapper>
         {message.Message}
+        {tag && <TagBlock>{tag}</TagBlock>}
       </ChatWrapper>
-    </LeftBlock>
+    </MessageBlock>
   );
 };
+
+export default SingleQnA;

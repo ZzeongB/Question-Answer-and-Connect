@@ -7,17 +7,18 @@ import Header from "./components/ChatroomHeader";
 import Footer from "./components/ChatroomFooter";
 import ExpandableKeywordList from "./components/ExpandableKeywordList";
 import axios from "axios";
-
+import QnA from "./components/QnA";
 const ChattingScreen = () => {
   // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
   const [keywords, setKeywords] = useState([]);
-  const [expanded, setExpanded] = useState(false);
-
+  const [expanded, setExpanded] = useState(true);
+  const [selectedKeyword, setSelectedKeyword] = useState(null);
+  
   // Function to fetch chat messages from server
   const fetchMessages = () => {
     axios
-      .get("http://localhost:3001/chat")
+      .get("http://localhost:3000/chat")
       .then((response) => {
         // Update state with fetched messages
         setMessages(response.data);
@@ -29,9 +30,9 @@ const ChattingScreen = () => {
 
   const fetchKeywords = () => {
     axios
-      .get("http://localhost:3001/keyword")
+      .get("http://localhost:3000/keyword")
       .then((response) => {
-        // Update state with fetched messages
+        // Update state with fetched keywords
         setKeywords(response.data);
       })
       .catch((error) => {
@@ -43,7 +44,7 @@ const ChattingScreen = () => {
   const onChatSubmit = (message) => {
     const date = new Date();
     axios
-      .post("http://localhost:3001/chat", {
+      .post("http://localhost:3000/chat", {
         User: "me",
         Message: message,
         Date: date.toISOString(),
@@ -63,7 +64,25 @@ const ChattingScreen = () => {
     fetchMessages();
     fetchKeywords();
   }, []);
+
+  // Handle keyword click
+  const onKeywordClick = (keyword) => {
+    if (selectedKeyword === keyword) {
+      setSelectedKeyword(null); // Deselect if the same keyword is clicked
+    } else {
+      setSelectedKeyword(keyword); // Select the clicked keyword
+    }
+  };
+
+  // Filter messages based on selected keyword
+  const filteredMessages = selectedKeyword
+    ? messages.filter((message) =>
+        message.tag && (message.tag === selectedKeyword)
+      )
+    : messages;
+
   // Render the chat screen
+  console.log(selectedKeyword);
   return (
     <div
       style={{
@@ -74,16 +93,24 @@ const ChattingScreen = () => {
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
-      <Chat
-        user={"user"}
+      {selectedKeyword ? 
+      <QnA
+        user={"me"}
         style={{ flex: 1, overflow: "auto" }}
-        messages={messages}
+        messages={filteredMessages}
+      />:
+      <Chat
+        user={"me"}
+        style={{ flex: 1, overflow: "auto" }}
+        messages={filteredMessages}
       />
-      <div style={{position: "fixed", bottom: "0px", width: "100%", backgroundColor:"transparent"}}>
+}
+      <div style={{ position: "fixed", bottom: "0px", width: "100%", backgroundColor: "transparent" }}>
         <ExpandableKeywordList
           keywords={keywords}
           expanded={expanded}
           setExpanded={setExpanded}
+          onKeywordClick={onKeywordClick} // Pass click handler to keyword list
         />
         <Footer onChatSumbmit={onChatSubmit} />
       </div>

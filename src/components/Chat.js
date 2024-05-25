@@ -18,12 +18,13 @@ const Wrapper = styled.main`
 
 // Define the Chat component
 const Chat = ({ user, messages }) => {
+  console.log("chat");
   return (
     <Wrapper>
       <div className="chat-messages">
         {messages && // Check if messages exist
           messages
-            .slice(-20) // Display only the last 20 messages
+            //.slice(-20) // Display only the last 20 messages
             .map((message, idx) => {
               // Return a SingleChat component for each message
               return (
@@ -32,6 +33,9 @@ const Chat = ({ user, messages }) => {
                   index={idx}
                   message={message}
                   user={user}
+                  tag = {message.tag}
+                  is_question = {message.is_question}
+                  parent_id = {message.parent_id}
                 />
               );
             })}

@@ -24,7 +24,7 @@ const Keyword = styled.div`
 `;
 
 
-const ExpandableKeywordList = ({ keywords, expanded, setExpanded }) => {
+const ExpandableKeywordList = ({ keywords, expanded, setExpanded, onKeywordClick }) => {
   return (
     <KeywordsWrapper
       expanded={expanded}
@@ -38,8 +38,9 @@ const ExpandableKeywordList = ({ keywords, expanded, setExpanded }) => {
           <Keyword
             backgroundColor={value.backgroundColor}
             textColor={value.textColor}
+            onClick={() => onKeywordClick(key)}
           >
-            {key}
+            {key};
           </Keyword>
         );
       })}
