@@ -12,36 +12,48 @@ const ChatWrapper = styled.div`
   white-space: pre-wrap;
 `;
 
-const RightBlock = styled.div`
-  text-align: right;
-  margin-top: 10px;
+const BaseBlock = styled.div`
+  margin-top: 5px;
   margin-left: 10px;
   margin-right: 10px;
-
-  & ${ChatWrapper} {
-    background-color: #ffffff;
-    text-align: left;
-  }
+  font-size: 15px;
 `;
 
-const LeftBlock = styled.div`
-  text-align: left;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-
+const RightBlock = styled(BaseBlock)`
+  text-align: right;
   & ${ChatWrapper} {
     background-color: #ffec42;
     text-align: left;
   }
 `;
 
-const NameBlock = styled.div`
-  margin-bottom: 5px;
+const LeftBlock = styled(BaseBlock)`
+  text-align: left;
+  & ${ChatWrapper} {
+    background-color: #ffffff;
+    text-align: left;
+    border-radius: 10px;
+  }
 `;
 
-export const SingleChat = ({ index, message }) => {
+const NameBlock = styled.div` 
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: rgb(0, 0, 0, 0.5); 
+`;
+
+export const SingleChat = ({ index, message, user }) => {
   // messages : [{User: "user", Message: "message", Date: "date"}]
+  if (user == message.User) {
+    return (
+      <RightBlock key={index}>
+        <NameBlock>{message.User}</NameBlock>
+        <ChatWrapper>
+          {message.Message}
+        </ChatWrapper>
+      </RightBlock>
+    );
+  }
   return (
     <LeftBlock key={index}>
       <NameBlock>{message.User}</NameBlock>

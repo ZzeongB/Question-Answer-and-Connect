@@ -1,48 +1,44 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from "react";
-import csvjson from "../csvjson.json";
-import { SingleChat } from "./ChatBlock";
+import { SingleChat } from "./SingleChat";
 import styled from "styled-components";
 
+// Define a styled component for the chat wrapper
 const Wrapper = styled.main`
-  position: relative;
+  position: fixed;
   top: 50px;
-  bottom: 65px;
+  bottom: 50px;
   left: 0px;
   right: 0px;
   overflow: auto;
   width: 100%;
-  background-color: #ffffff;
-`;
+  background-color: rgb(205, 223, 223);
+  padding-bottom: 60px;
+  `;
 
-const Chat = ({ user }) => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-
-  useEffect(() => {
-    // Fetch messages from JSON file
-    console.log("Fetching messages");
-    setMessages(csvjson);
-    console.log("Done fetching messages");
-  }, []);
-  const handleInputChange = (event) => {
-    setNewMessage(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    // Handle form submission, TODO
-    console.log("Form submitted");
-  };
-
+// Define the Chat component
+const Chat = ({ user, messages }) => {
   return (
     <Wrapper>
       <div className="chat-messages">
-        {messages.slice(-20, -1).map((message, index) => {
-          // Display only the last 20 messages
-          return <SingleChat message={message} index={index} />;
-        })}
+        {messages && // Check if messages exist
+          messages
+            .slice(-20) // Display only the last 20 messages
+            .map((message, idx) => {
+              // Return a SingleChat component for each message
+              return (
+                <SingleChat
+                  key={message.id}
+                  index={idx}
+                  message={message}
+                  user={user}
+                />
+              );
+            })}
       </div>
     </Wrapper>
   );
 };
 
+// Export the Chat component
 export default Chat;
