@@ -8,13 +8,16 @@ import Footer from "./components/ChatroomFooter";
 import ExpandableKeywordList from "./components/ExpandableKeywordList";
 import axios from "axios";
 import QnA from "./components/QnA";
+import handleRequest from "./api/generate";
+
 const ChattingScreen = () => {
   // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [expanded, setExpanded] = useState(true);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
-  
+  const [apiOutput, setApiOutput] = useState();
+
   // Function to fetch chat messages from server
   const fetchMessages = () => {
     axios
@@ -41,22 +44,34 @@ const ChattingScreen = () => {
   };
 
   // Function to handle chat submission
-  const onChatSubmit = (message) => {
-    const date = new Date();
-    axios
-      .post("http://localhost:3000/chat", {
-        User: "me",
-        Message: message,
-        Date: date.toISOString(),
-      })
-      .then((res) => {
-        console.log("Chat message sent", res);
-        // Update the messages state with the new message
-        setMessages((prevMessages) => [...prevMessages, res.data]);
-      })
-      .catch((Error) => {
-        console.error("Failed to send chat message", Error);
+  const onChatSubmit = async (message) => {
+    // TODO: @Taehyun
+    // 1. Send the message to the OpenAI API
+    try {
+      handleRequest(message, setApiOutput).then(() => {
+        console.log("API output", apiOutput);
+        // 2. Log the response from the API to json-server
+        const date = new Date();
+        axios
+          .post("http://localhost:3000/chat", {
+            User: "me",
+            Message: message,
+            Date: date.toISOString(),
+          })
+          .then((res) => {
+            console.log("Chat message sent to server", res);
+            // 3. Update the messages state with the new message
+            setMessages((prevMessages) => [...prevMessages, res.data]);
+          })
+          .catch((Error) => {
+            console.error("Failed to send chat message", Error);
+          });
       });
+
+      // TODO: @ZzeongB: Handle output data
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Fetch messages when component mounts
@@ -76,8 +91,10 @@ const ChattingScreen = () => {
 
   // Filter messages based on selected keyword
   const filteredMessages = selectedKeyword
-    ? messages.filter((message) =>
-        message.tag && (message.tag === selectedKeyword)
+    ? messages.filter(
+        (message) => {
+          return message.tag && message.tag === parseInt(selectedKeyword);
+        } // match data type
       )
     : messages;
 
