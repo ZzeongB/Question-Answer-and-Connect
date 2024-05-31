@@ -7,7 +7,7 @@ const Wrapper = styled.footer`
   left: 0px;
   right: 0px;
   width: 100%;
-  height: 50px;
+  height: 70px;
   overflow: auto;
   padding: 6px;
   z-index: 0;
@@ -24,12 +24,12 @@ const Wrapper = styled.footer`
       outline: none;
     }
     & textarea {
-      width: 100%;
+      width: 90%;
       resize: none;
       height: 100%;
       margin: 0;
       font-size: 15px;
-      padding: 10px;
+      padding:10px;
     }
     & button {
       width: 50px;

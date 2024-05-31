@@ -82,7 +82,6 @@ const ChattingScreen = () => {
     : messages;
 
   // Render the chat screen
-  console.log(selectedKeyword);
   return (
     <div
       style={{
@@ -93,24 +92,33 @@ const ChattingScreen = () => {
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
-      {selectedKeyword ? 
-      <QnA
-        user={"me"}
-        style={{ flex: 1, overflow: "auto" }}
-        messages={filteredMessages}
-      />:
-      <Chat
-        user={"me"}
-        style={{ flex: 1, overflow: "auto" }}
-        messages={filteredMessages}
-      />
-}
-      <div style={{ position: "fixed", bottom: "0px", width: "100%", backgroundColor: "transparent" }}>
+      {selectedKeyword ? (
+        <QnA
+          user={"me"}
+          style={{ flex: 1, overflow: "auto" }}
+          messages={filteredMessages}
+        />
+      ) : (
+        <Chat
+          user={"me"}
+          style={{ flex: 1, overflow: "auto" }}
+          messages={filteredMessages}
+        />
+      )}
+      <div
+        style={{
+          position: "fixed",
+          bottom: "0px",
+          width: "100%",
+          backgroundColor: "transparent",
+        }}
+      >
         <ExpandableKeywordList
           keywords={keywords}
           expanded={expanded}
           setExpanded={setExpanded}
           onKeywordClick={onKeywordClick} // Pass click handler to keyword list
+          selectedKeyword={selectedKeyword}
         />
         <Footer onChatSumbmit={onChatSubmit} />
       </div>

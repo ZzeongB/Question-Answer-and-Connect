@@ -49,7 +49,6 @@ const QnA = ({ user, messages }) => {
     return acc;
   }, []);
 
-  console.log("QnA");
   return (
     <Wrapper>
       <div className="chat-messages">

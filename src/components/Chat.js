@@ -18,7 +18,6 @@ const Wrapper = styled.main`
 
 // Define the Chat component
 const Chat = ({ user, messages }) => {
-  console.log("chat");
   return (
     <Wrapper>
       <div className="chat-messages">

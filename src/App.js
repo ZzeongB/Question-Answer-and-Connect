@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import ChattingScreen from "./ChattingScreen";
 
 function App() {
