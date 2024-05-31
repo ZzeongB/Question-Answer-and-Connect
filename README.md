@@ -2,7 +2,7 @@
 
 ## Demo
 Run the following commands for demo: 
-```
+```bash
 json-server [database] # import data
 yarn start # run application
 ```
