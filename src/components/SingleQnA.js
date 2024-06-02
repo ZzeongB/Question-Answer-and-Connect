@@ -10,6 +10,7 @@ const ChatWrapper = styled.div`
   max-width: 70%;
   word-wrap: break-word;
   white-space: pre-wrap;
+  background-color: ${(props) => props.color || "#ffffff"}; // Use the passed color prop
 `;
 
 const BaseBlock = styled.div`
@@ -22,7 +23,6 @@ const BaseBlock = styled.div`
 const RightBlock = styled(BaseBlock)`
   text-align: right;
   & ${ChatWrapper} {
-    background-color: #ffec42;
     text-align: left;
   }
 `;
@@ -30,7 +30,6 @@ const RightBlock = styled(BaseBlock)`
 const LeftBlock = styled(BaseBlock)`
   text-align: left;
   & ${ChatWrapper} {
-    background-color: #ffffff;
     text-align: left;
     border-radius: 10px;
   }
@@ -48,15 +47,15 @@ const TagBlock = styled.div`
   color: #888;
 `;
 
-const SingleQnA = ({ index, message, user, tag, is_question, parent_id, onClick }) => {
+const SingleQnA = ({ index, message, user, tag, is_question, parent_id, onClick, color }) => {
   const isUserMessage = user === message.User;
   
   const MessageBlock = is_question ? RightBlock : LeftBlock;
-
+  const backgroundColor = color ? color : is_question ? "#ffec42" : "#ffffff";
   return (
     <MessageBlock key={index} onClick={is_question ? onClick : undefined} style={{ cursor: is_question ? 'pointer' : 'default' }}>
       <NameBlock>{message.User}</NameBlock>
-      <ChatWrapper>
+      <ChatWrapper color={backgroundColor}>
         {message.Message}
         {tag && <TagBlock>{tag}</TagBlock>}
       </ChatWrapper>
