@@ -40,8 +40,8 @@ const ExpandableKeywordList = ({
     <KeywordsWrapper
       $expanded={expanded}
       onClick={() => {
-        console.log("expanding");
-        setExpanded(!expanded);
+        //console.log("expanding");
+        //setExpanded(!expanded);
       }}
     >
       {Object.entries(keywords).map(([key, value]) => {

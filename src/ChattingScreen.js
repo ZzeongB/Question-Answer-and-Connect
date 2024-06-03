@@ -109,27 +109,22 @@ const ChattingScreen = () => {
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
-      {selectedKeyword ? (
-        <QnA
-          user={"me"}
-          style={{ flex: 1, overflow: "auto" }}
-          messages={filteredMessages}
-        />
-      ) : (
-        <Chat
-          user={"me"}
-          style={{ flex: 1, overflow: "auto" }}
-          messages={filteredMessages}
-        />
-      )}
-      <div
-        style={{
-          position: "fixed",
-          bottom: "0px",
-          width: "100%",
-          backgroundColor: "transparent",
-        }}
-      >
+      {selectedKeyword ? 
+      <QnA
+        user={"me"}
+        style={{ flex: 1, overflow: "auto" }}
+        messages={filteredMessages}
+        keywords={keywords}
+      />:
+      <Chat
+        user={"me"}
+        style={{ flex: 1, overflow: "auto" }}
+        messages={filteredMessages}
+        keywords={keywords}
+      />
+}
+      <div style={{ position: "fixed", bottom: "0px", width: "100%", backgroundColor: "transparent" }}>
+
         <ExpandableKeywordList
           keywords={keywords}
           expanded={expanded}

@@ -16,8 +16,17 @@ const Wrapper = styled.main`
   padding-bottom: 60px;
   `;
 
+const createColorKeywordDict = (keywords) => {
+  return Object.entries(keywords).reduce((acc, [key, value]) => {
+    acc[key] = value.backgroundColor;
+    return acc;
+  }, {});
+};
+
 // Define the Chat component
-const Chat = ({ user, messages }) => {
+const Chat = ({ user, messages, keywords }) => {
+  const colorKeywordDict = createColorKeywordDict(keywords);
+
   return (
     <Wrapper>
       <div className="chat-messages">
@@ -25,6 +34,8 @@ const Chat = ({ user, messages }) => {
           messages
             //.slice(-20) // Display only the last 20 messages
             .map((message, idx) => {
+              const messageColor = colorKeywordDict[message.tag];
+
               // Return a SingleChat component for each message
               return (
                 <SingleChat
@@ -35,6 +46,7 @@ const Chat = ({ user, messages }) => {
                   tag = {message.tag}
                   is_question = {message.is_question}
                   parent_id = {message.parent_id}
+                  color={messageColor}
                 />
               );
             })}

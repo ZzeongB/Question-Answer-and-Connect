@@ -14,9 +14,16 @@ const Wrapper = styled.main`
   padding-bottom: 60px;
   `;
 
-const QnA = ({ user, messages }) => {
-  const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
+const createColorKeywordDict = (keywords) => {
+  return Object.entries(keywords).reduce((acc, [key, value]) => {
+    acc[key] = value.backgroundColor;
+    return acc;
+  }, {});
+};
 
+const QnA = ({ user, messages, keywords }) => {
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
+  const colorKeywordDict = createColorKeywordDict(keywords);
   const handleQuestionClick = (questionId) => {
     setSelectedQuestionIds((prevSelectedIds) => {
       if (prevSelectedIds.includes(questionId)) {
@@ -53,9 +60,10 @@ const QnA = ({ user, messages }) => {
     <Wrapper>
       <div className="chat-messages">
       {flattenedMessages.map((message, idx) => {
-          if (message.is_question) {
-            return (
-              <SingleQnA
+        if (message.is_question) {
+          const messageColor = colorKeywordDict[message.tag];
+          return (
+            <SingleQnA
                 key={message.id}
                 index={idx}
                 message={message}
@@ -64,9 +72,11 @@ const QnA = ({ user, messages }) => {
                 is_question={message.is_question}
                 parent_id={message.parent_id}
                 onClick={() => handleQuestionClick(message.id)}
+                color={messageColor}
               />
             );
           } else if (selectedQuestionIds.includes(message.parent_id)) {
+            const messageColor = colorKeywordDict[message.tag];
             return (
               <SingleQnA
                 key={message.id}
@@ -76,6 +86,7 @@ const QnA = ({ user, messages }) => {
                 tag={message.tag}
                 is_question={message.is_question}
                 parent_id={message.parent_id}
+                color={messageColor}
               />
             );
           } else {
