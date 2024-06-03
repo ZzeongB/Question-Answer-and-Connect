@@ -1,5 +1,26 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+// Spinner animation
+const rotate = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Loader = styled.div`
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: ${rotate} 2s linear infinite;
+  margin-right: 10px;
+`;
+const MessageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
 
 const ChatWrapper = styled.div`
   position: relative;
@@ -11,10 +32,11 @@ const ChatWrapper = styled.div`
   word-wrap: break-word;
   white-space: pre-wrap;
   border: 2px solid;
-  border-color: ${(props) => props.color || "#ffffff"};
-  background-color: ${(props) =>
-    props.color ? `${props.color}4D` : "#ffffff4D"};
+  border-color: ${({ color, isLoading }) => isLoading ? "#cccccc" : (color || "#ffffff")};
+  background-color: ${({ color, isLoading }) => isLoading ? "#eeeeee" : (color ? `${color}4D` : "#ffffff4D")};
+  transition: border-color 0.5s, background-color 0.5s; // Smooth transition for color change
 `;
+
 
 const BaseBlock = styled.div`
   margin-top: 10px;
@@ -67,6 +89,7 @@ export const SingleChat = ({
   is_question,
   parent_id,
   color,
+  isLoading
 }) => {
   const backgroundColor = color ? color : user === "me" ? "#E0E0E0" : "#ffffff";
   if (user === message.User) {
@@ -80,7 +103,10 @@ export const SingleChat = ({
           <></>
         )}
       </div>
-      <ChatWrapper color={backgroundColor}>{message.Message}</ChatWrapper>
+      <MessageContainer>
+        {isLoading && <Loader />}
+        <ChatWrapper color={backgroundColor}>{message.Message}</ChatWrapper>
+      </MessageContainer>
       </RightBlock>
     );
   }
