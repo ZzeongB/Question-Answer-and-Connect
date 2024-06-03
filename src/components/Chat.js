@@ -26,6 +26,7 @@ const createColorKeywordDict = (keywords) => {
 // Define the Chat component
 const Chat = ({ user, messages, keywords }) => {
   const colorKeywordDict = createColorKeywordDict(keywords);
+
   return (
     <Wrapper>
       <div className="chat-messages">
