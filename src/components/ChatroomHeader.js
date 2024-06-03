@@ -4,13 +4,13 @@ import styled from "styled-components";
 const HeaderWrapper = styled.header`
   position: fixed;
   width: 100%;
-  background-color: rgb(205, 223, 223);
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
   box-sizing: border-box;
+  background-color: #F5F6F7;
 
   & span {
     font-weight: bold;

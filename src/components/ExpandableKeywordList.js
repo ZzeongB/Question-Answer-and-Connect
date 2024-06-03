@@ -6,11 +6,12 @@ const KeywordsWrapper = styled.div`
   flex-direction: row;
   flex-wrap: ${(props) => (props.$expanded ? "wrap" : "nowrap")};
   width: 100%;
-  // background-color: rgb(0, 0, 0, 0.1);
+  background-color: rgb(0, 0, 0, 0.1);
   cursor: pointer;
   height: auto;
   overflow: ${(props) => (props.$expanded ? "visible" : "auto")};
   transition: height 0.3s ease-in-out;
+  scrollbar-width: none; // Hide scrollbar for Firefox
 `;
 const Keyword = styled.div`
   box-sizing: border-box; // Correct property
@@ -41,7 +42,7 @@ const ExpandableKeywordList = ({
       $expanded={expanded}
       onClick={() => {
         //console.log("expanding");
-        //setExpanded(!expanded);
+        setExpanded(!expanded);
       }}
     >
       {Object.entries(keywords).map(([key, value]) => {

@@ -12,8 +12,8 @@ const Wrapper = styled.main`
   right: 0px;
   overflow: auto;
   width: 100%;
-  background-color: rgb(205, 223, 223);
   padding-bottom: 60px;
+  background-color: #F5F6F7;
   `;
 
 const createColorKeywordDict = (keywords) => {
@@ -26,7 +26,6 @@ const createColorKeywordDict = (keywords) => {
 // Define the Chat component
 const Chat = ({ user, messages, keywords }) => {
   const colorKeywordDict = createColorKeywordDict(keywords);
-
   return (
     <Wrapper>
       <div className="chat-messages">

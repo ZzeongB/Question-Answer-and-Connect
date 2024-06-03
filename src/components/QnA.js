@@ -10,8 +10,9 @@ const Wrapper = styled.main`
   right: 0px;
   overflow: auto;
   width: 100%;
-  background-color: rgb(205, 223, 223);
+  background-color: #F5F6F7;
   padding-bottom: 60px;
+  
   `;
 
 const createColorKeywordDict = (keywords) => {

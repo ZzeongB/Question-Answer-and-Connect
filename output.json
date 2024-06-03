@@ -82,7 +82,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "8",
@@ -190,7 +190,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "17",
@@ -250,7 +250,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "22",
@@ -346,7 +346,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "30",
@@ -358,7 +358,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "31",
@@ -394,7 +394,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "34",
@@ -466,7 +466,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "40",
@@ -490,7 +490,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "42",
@@ -502,7 +502,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "43",
@@ -574,7 +574,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "49",
@@ -646,7 +646,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "55",
@@ -658,7 +658,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "56",
@@ -742,7 +742,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "63",
@@ -802,7 +802,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "68",
@@ -826,7 +826,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "70",
@@ -838,7 +838,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": "69",
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "71",
@@ -862,7 +862,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "73",
@@ -946,7 +946,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "80",
@@ -970,7 +970,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "82",
@@ -1030,7 +1030,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "87",
@@ -1114,7 +1114,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "94",
@@ -1198,7 +1198,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "101",
@@ -1258,7 +1258,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "106",
@@ -1270,7 +1270,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "107",
@@ -1282,7 +1282,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "108",
@@ -1330,7 +1330,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "112",
@@ -1342,7 +1342,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "113",
@@ -1438,7 +1438,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "121",
@@ -1498,7 +1498,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "126",
@@ -1534,7 +1534,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "129",
@@ -1546,7 +1546,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "130",
@@ -1618,7 +1618,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "136",
@@ -1642,7 +1642,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "138",
@@ -1726,7 +1726,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "145",
@@ -1762,7 +1762,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "148",
@@ -1786,7 +1786,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "150",
@@ -1822,7 +1822,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "153",
@@ -1942,7 +1942,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "163",
@@ -1990,7 +1990,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "167",
@@ -2002,7 +2002,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "168",
@@ -2134,7 +2134,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 7
+      "tag": "Special Lectures and Accesibility"
     },
     {
       "id": "179",
@@ -2158,7 +2158,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 7
+      "tag": "Special Lectures and Accesibility"
     },
     {
       "id": "181",
@@ -2278,7 +2278,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "191",
@@ -2350,7 +2350,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "197",
@@ -2386,7 +2386,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "200",
@@ -2422,7 +2422,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "203",
@@ -2446,7 +2446,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "205",
@@ -2518,7 +2518,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "211",
@@ -2554,7 +2554,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "214",
@@ -2566,7 +2566,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "215",
@@ -2722,7 +2722,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "228",
@@ -2830,7 +2830,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "237",
@@ -2866,7 +2866,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "240",
@@ -2926,7 +2926,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "245",
@@ -2950,7 +2950,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "247",
@@ -3010,7 +3010,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "252",
@@ -3058,7 +3058,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "256",
@@ -3082,7 +3082,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "258",
@@ -3154,7 +3154,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "264",
@@ -3190,7 +3190,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "267",
@@ -3250,7 +3250,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "272",
@@ -3298,7 +3298,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "276",
@@ -3346,7 +3346,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "280",
@@ -3490,7 +3490,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "292",
@@ -3550,7 +3550,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 2
+      "tag": "Optimization and Gradient Descent"
     },
     {
       "id": "297",
@@ -3586,7 +3586,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "300",
@@ -3634,7 +3634,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": "299",
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "304",
@@ -3670,7 +3670,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "307",
@@ -3778,7 +3778,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "316",
@@ -3814,7 +3814,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "319",
@@ -3886,7 +3886,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "325",
@@ -3898,7 +3898,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "326",
@@ -3910,7 +3910,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "327",
@@ -3970,7 +3970,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "332",
@@ -4138,7 +4138,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "346",
@@ -4198,7 +4198,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "351",
@@ -4222,7 +4222,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "353",
@@ -4246,7 +4246,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "355",
@@ -4270,7 +4270,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "357",
@@ -4330,7 +4330,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "362",
@@ -4354,7 +4354,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "364",
@@ -4402,7 +4402,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "368",
@@ -4450,7 +4450,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 2
+      "tag": "Optimization and Gradient Descent"
     },
     {
       "id": "372",
@@ -4498,7 +4498,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 2
+      "tag": "Optimization and Gradient Descent"
     },
     {
       "id": "376",
@@ -4726,7 +4726,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "395",
@@ -4774,7 +4774,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 1
+      "tag": "Course Logistics"
     },
     {
       "id": "399",
@@ -4810,7 +4810,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "402",
@@ -4894,7 +4894,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "409",
@@ -4930,7 +4930,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "412",
@@ -5074,7 +5074,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "424",
@@ -5086,7 +5086,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 4
+      "tag": "Coding and Implementation Issues"
     },
     {
       "id": "425",
@@ -5122,7 +5122,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 6
+      "tag": "Mathematical Theories and Proofs"
     },
     {
       "id": "428",
@@ -5158,7 +5158,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "431",
@@ -5230,7 +5230,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 5
+      "tag": "Submission and Documentation Standards"
     },
     {
       "id": "437",
@@ -5266,7 +5266,7 @@
       "Type": "Q",
       "is_question": true,
       "parent_id": null,
-      "tag": 2
+      "tag": "Optimization and Gradient Descent"
     },
     {
       "id": "3fc2",
@@ -5324,25 +5324,32 @@
     }
   ],
   "keyword": {
-    "1": {
-      "backgroundColor": "#FFD1DC",
+    "Course Logistics": {
+      "backgroundColor": "#A9CCE3",
       "textColor": "#000000"
     },
-    "2": {
-      "backgroundColor": "#B2EBF2",
+    "Optimization and Gradient Descent": {
+      "backgroundColor": "#F5CBA7",
       "textColor": "#000000"
     },
-    "4": {
-      "backgroundColor": "#FFF59D",
+    "Coding and Implementation Issues": {
+      "backgroundColor": "#F1948A",
       "textColor": "#000000"
     },
-    "5": {
-      "backgroundColor": "#E1BEE7",
+    "Submission and Documentation Standards": {
+      "backgroundColor": "#A3E4D7",
       "textColor": "#000000"
     },
-    "6": {},
-    "kdkekekekekekekekekkeekkekekekekekeee": {
-      "backgroundColor": "#DCE775",
+    "Mathematical Theories and Proofs": {
+      "backgroundColor": "#82E0AA",
+      "textColor": "#000000"
+    },
+    "Special Lectures and Accesibility": {
+      "backgroundColor": "#F7DC6F",
+      "textColor": "#000000"
+    },
+    "Unrelated": {
+      "backgroundColor": "#D7BDE2",
       "textColor": "#000000"
     }
   }

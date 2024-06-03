@@ -14,7 +14,7 @@ const ChattingScreen = () => {
   // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
   const [keywords, setKeywords] = useState([]);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [apiOutput, setApiOutput] = useState();
 
@@ -93,7 +93,7 @@ const ChattingScreen = () => {
   const filteredMessages = selectedKeyword
     ? messages.filter(
         (message) => {
-          return message.tag && message.tag === parseInt(selectedKeyword);
+          return message.tag && message.tag === (selectedKeyword);
         } // match data type
       )
     : messages;
@@ -105,7 +105,7 @@ const ChattingScreen = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "rgb(205, 223, 223)",
+        backgroundColor: "#FFFFFF",
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />

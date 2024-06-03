@@ -217,7 +217,10 @@
       "id": "76ea",
       "User": "me",
       "Message": "뺄샘에 대한 새로운 지룸ㄴ",
-      "Date": "2024-05-29T06:30:43.397Z"
+      "Date": "2024-05-29T06:30:43.397Z",
+      "tag": "keyword2",
+      "is_question": false,
+      "parent_id": "2688"
     },
     {
       "id": "f449",
@@ -228,25 +231,28 @@
   ],
   "keyword": {
     "keyword1": {
-      "backgroundColor": "#FFD1DC",
+      "backgroundColor": "#A9CCE3",
       "textColor": "#000000"
     },
     "keyword2": {
-      "backgroundColor": "#B2EBF2",
+      "backgroundColor": "#F5CBA7",
       "textColor": "#000000"
     },
     "keyword3": {
-      "backgroundColor": "#DCE775",
+      "backgroundColor": "#F1948A",
       "textColor": "#000000"
     },
     "keyword4": {
-      "backgroundColor": "#FFF59D",
+      "backgroundColor": "#A3E4D7",
       "textColor": "#000000"
     },
     "keyword5": {
-      "backgroundColor": "#E1BEE7",
+      "backgroundColor": "#82E0AA",
       "textColor": "#000000"
     },
-    "keyword6": {}
+    "keyword6": {
+      "backgroundColor": "F7DC6F",
+      "textColor": "#000000"
+    }
   }
 }
