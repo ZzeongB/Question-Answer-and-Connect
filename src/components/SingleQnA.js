@@ -58,13 +58,13 @@ const SingleQnA = ({
   user,
   tag,
   is_question,
-  parent_id,
   onClick,
   color,
+  number,
 }) => {
   const isUserMessage = user === message.User;
 
-  const MessageBlock = is_question ? RightBlock : LeftBlock;
+  const MessageBlock = is_question ? LeftBlock : RightBlock;
   const backgroundColor = is_question ? color : "#E0E0E0";
 
   return (
@@ -76,7 +76,7 @@ const SingleQnA = ({
       <NameBlock>{message.User}</NameBlock>
       <ChatWrapper color={backgroundColor}>
         {message.Message}
-        {/* {tag && <TagBlock>{tag}</TagBlock>} */}
+        {number? tag && <TagBlock>{number}개의 답변</TagBlock>: <></>}
       </ChatWrapper>
     </MessageBlock>
   );

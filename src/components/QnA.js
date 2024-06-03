@@ -39,7 +39,7 @@ const QnA = ({ user, messages, keywords }) => {
 
   // Group messages by their parent_id
   const groupedMessages = messages.reduce((acc, message) => {
-    if (message.is_question) {
+    if (message.is_question && !message.parent_id) {
       acc[message.id] = [message]; // Initialize with the question itself
     } else if (message.parent_id) {
       if (!acc[message.parent_id]) {
@@ -57,11 +57,13 @@ const QnA = ({ user, messages, keywords }) => {
     return acc;
   }, []);
 
+  console.log(groupedMessages)
+
   return (
     <Wrapper>
       <div className="chat-messages">
       {flattenedMessages.map((message, idx) => {
-        if (message.is_question) {
+        if (message.is_question && !message.parent_id) {
           const messageColor = colorKeywordDict[message.tag];
           return (
             <SingleQnA
@@ -71,9 +73,9 @@ const QnA = ({ user, messages, keywords }) => {
                 user={user}
                 tag={message.tag}
                 is_question={message.is_question}
-                parent_id={message.parent_id}
                 onClick={() => handleQuestionClick(message.id)}
                 color={messageColor}
+                number={groupedMessages[message.id].length-1}
               />
             );
           } else if (selectedQuestionIds.includes(message.parent_id)) {
@@ -86,7 +88,6 @@ const QnA = ({ user, messages, keywords }) => {
                 user={user}
                 tag={message.tag}
                 is_question={message.is_question}
-                parent_id={message.parent_id}
                 color={messageColor}
               />
             );

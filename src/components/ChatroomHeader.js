@@ -36,7 +36,7 @@ const HeaderWrapper = styled.header`
 const Header = ({ roomName, onBack }) => {
   return (
     <HeaderWrapper>
-      <button onClick={onBack}>{"<"}</button>
+      {/* <button onClick={onBack}>{"<"}</button> */}
       <span>{roomName}</span>
     </HeaderWrapper>
   );
