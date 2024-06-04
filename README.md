@@ -19,7 +19,7 @@ If you enter a new chat, it will be classified under a keyword in a short time, 
 If it is your first time, run the command below to install requirements:
 ```bash
 yarn install
-
+```
 You need to run two commands in two terminals, one in each.
 Run the following commands for demo:
 ```bash
