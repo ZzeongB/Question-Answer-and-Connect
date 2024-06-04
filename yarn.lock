@@ -6610,7 +6610,7 @@ json-schema@^0.4.0:
 
 json-server@^1.0.0-beta.0:
   version "1.0.0-beta.0"
-  resolved "https://registry.npmjs.org/json-server/-/json-server-1.0.0-beta.0.tgz"
+  resolved "https://registry.yarnpkg.com/json-server/-/json-server-1.0.0-beta.0.tgz#87750d7254b663b79c493266232c6e41b954a059"
   integrity sha512-6LMP/lfigyAigG4NG8GM5Wf+OmCv/5RpyBJLOPEfODB1z+VeHNsnJQvkXz+E6w3j6cbYFo+uSwO2nXXXCqZubQ==
   dependencies:
     "@tinyhttp/app" "^2.2.3"

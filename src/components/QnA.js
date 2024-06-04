@@ -57,8 +57,6 @@ const QnA = ({ user, messages, keywords }) => {
     return acc;
   }, []);
 
-  console.log(groupedMessages)
-
   return (
     <Wrapper>
       <div className="chat-messages">
