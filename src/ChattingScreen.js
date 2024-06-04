@@ -235,11 +235,12 @@ const ChattingScreen = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#F5F6F7",
+        flex: 1,
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
-      <div style={{ flex: 1, overflow: "auto" }}>
+      <div style={{ overflow: "auto" }}>
         {selectedKeyword ? (
           <QnA
             user={"me"}
@@ -250,7 +251,7 @@ const ChattingScreen = () => {
         ) : (
           <Chat
             user={"me"}
-            style={{ flex: 1, overflow: "auto" }}
+            style={{ overflow: "auto" }}
             messages={filteredMessages}
             keywords={keywords}
             messagesEndRef={messagesEndRef}
@@ -263,6 +264,7 @@ const ChattingScreen = () => {
           bottom: "0px",
           width: "100%",
           backgroundColor: "transparent",
+          padding: "0px",
         }}
       >
         <ExpandableKeywordList
