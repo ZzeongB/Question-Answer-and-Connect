@@ -5,7 +5,13 @@ This repository contains implementation of HCI project, Question-Answer-and-Conn
 
 
 ## Demo
-Run the following commands for demo: 
+If it is your first time, run following commands to install requirements:
+```bash
+pip install json-server # install json-server
+yarn install # install dependencies
+```
+
+Run the following commands for demo:
 ```bash
 json-server [database] # import data
 yarn start # run application
