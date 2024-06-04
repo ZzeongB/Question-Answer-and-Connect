@@ -1,0 +1,7 @@
+.LGRCF {
+    max-height: 90vh; /* Adjust based on your layout */
+    overflow-y: auto; /* Allows vertical scrolling */
+    position: relative; /* Ensures positioning is controlled within its parent */
+    bottom: 100px !important;
+  }
+  

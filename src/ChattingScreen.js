@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // Importing necessary components and axios for HTTP requests
 import Chat from "./components/Chat";
@@ -10,13 +10,22 @@ import axios from "axios";
 import QnA from "./components/QnA";
 import handleRequest from "./api/generate";
 
+
 const ChattingScreen = () => {
   // State to hold chat messages and keywords
   const [messages, setMessages] = useState([]);
+  const [recentQ, setrecentQ] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [apiOutput, setApiOutput] = useState();
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
 
   // Function to fetch chat messages from server
   const fetchMessages = () => {
@@ -31,6 +40,21 @@ const ChattingScreen = () => {
       });
   };
 
+  const fetchRecentQuestions = () => {
+    axios
+      .get("http://localhost:3000/chat")
+      .then((response) => {
+        // Filter messages for is_question true and slice the last 6
+        const questions = response.data.filter(msg => msg.is_question).slice(-6);
+        setrecentQ(questions);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch question messages:", error);
+      });
+  };
+  
+  
+
   const fetchKeywords = () => {
     axios
       .get("http://localhost:3000/keyword")
@@ -42,43 +66,123 @@ const ChattingScreen = () => {
         console.error("Failed to fetch keywords");
       });
   };
+// Function to handle chat submission
+const onChatSubmit = async (message) => {
+  try {
+    const keywordNames = Object.keys(keywords);
+    const Questions = recentQ.map(messageObject => `${messageObject.id}. ${messageObject.Message}`);
 
-  // Function to handle chat submission
-  const onChatSubmit = async (message) => {
-    // TODO: @Taehyun
-    // 1. Send the message to the OpenAI API
-    try {
-      handleRequest(message, setApiOutput).then(() => {
-        console.log("API output", apiOutput);
-        // 2. Log the response from the API to json-server
-        const date = new Date();
-        axios
-          .post("http://localhost:3000/chat", {
-            User: "me",
-            Message: message,
-            Date: date.toISOString(),
-          })
-          .then((res) => {
-            console.log("Chat message sent to server", res);
-            // 3. Update the messages state with the new message
-            setMessages((prevMessages) => [...prevMessages, res.data]);
-          })
-          .catch((Error) => {
-            console.error("Failed to send chat message", Error);
-          });
-      });
+    // Determine the next message ID
+    const maxId = messages.reduce((max, msg) => Math.max(max, parseInt(msg.id, 10)), 0) + 1;
 
-      // TODO: @ZzeongB: Handle output data
-    } catch (error) {
-      console.error(error);
+    // Initially post the message with temporary values
+    const tempMessage = {
+      id: maxId.toString(), // Use the calculated ID
+      User: "me",
+      Message: message,
+      Date: new Date().toISOString(),
+      is_question: false,
+      parent_id: null,
+      tag: null,
+      isLoading: true
+    };
+
+    let initialPostResponse = await axios.post("http://localhost:3000/chat", tempMessage);
+    setMessages((prevMessages) => [...prevMessages, initialPostResponse.data]);
+
+    // Call API to get response details
+    const apiResponse = await handleRequest(message, keywordNames, Questions);
+    console.log("API output", apiResponse, keywordNames);
+
+    let isQuestion = false;
+    let tag = null;
+    let parentId = null;
+
+    if (apiResponse.startsWith('Q, ')) {
+      isQuestion = true;
+      tag = apiResponse.split('Q, ')[1];
+    } else if (apiResponse.startsWith('A, ')) {
+      const parentIdFromAPI = apiResponse.split('A, ')[1];
+      const parentMessage = recentQ.find(m => m.id === parentIdFromAPI);
+      
+      if (parentMessage) {
+        parentId = parentMessage.parent_id ? parentMessage.parent_id : parentIdFromAPI;
+        tag = parentMessage.tag;
+      }
     }
-  };
+    
+    // Update the message on the server with new details including all fields
+    const fullUpdateData = {
+      User: tempMessage.User,  // Re-include original data for safety
+      Message: tempMessage.Message,  // Re-include original data for safety
+      Date: tempMessage.Date,  // Re-include original data for safety
+      isLoading: false,
+      is_question: isQuestion,
+      parent_id: parentId,
+      tag: tag
+    };
+
+    const updateResponse = await axios.put(`http://localhost:3000/chat/${initialPostResponse.data.id}`, fullUpdateData);
+
+    // Update local state with the new message details
+    setMessages((prevMessages) => prevMessages.map(msg => msg.id === initialPostResponse.data.id ? {...msg, ...updateResponse.data} : msg));
+
+    if (isQuestion && !keywordNames.includes(tag)) {
+      const newKeyword = {
+          backgroundColor: getNextTab10Color(),
+          textColor: "#000000"
+      };
+
+      // Update the keywords object in your local state or context
+      keywords[tag] = newKeyword;
+
+      // Prepare the object in the format expected by the server
+      const keywordData = {
+          [tag]: newKeyword
+      };
+
+      // Post the new keyword to the server
+      await axios.post("http://localhost:3000/keyword", keywordData)
+          .then(response => {
+              console.log("Keyword added:", response.data);
+          })
+          .catch(error => {
+              console.error("Error adding keyword:", error);
+          });
+    }
+
+    setApiOutput(apiResponse);
+    fetchRecentQuestions();
+    
+  } catch (error) {
+      console.error("Error in onChatSubmit:", error);
+  }
+};
+
+
+let lastColorIndex = 0;
+
+function getNextTab10Color() {
+    const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
+    const currentColorIndex = lastColorIndex % colors.length;
+    lastColorIndex += 1;  // Increment the index for next use
+    return colors[currentColorIndex];
+}
+  
+  
+  
 
   // Fetch messages when component mounts
   useEffect(() => {
     fetchMessages();
     fetchKeywords();
+    fetchRecentQuestions();
+    
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); 
 
   // Handle keyword click
   const onKeywordClick = (keyword) => {
@@ -88,6 +192,8 @@ const ChattingScreen = () => {
       setSelectedKeyword(keyword); // Select the clicked keyword
     }
   };
+
+  
 
   // Filter messages based on selected keyword
   const filteredMessages = selectedKeyword
@@ -109,6 +215,7 @@ const ChattingScreen = () => {
       }}
     >
       <Header roomName={"Chatroom"} onBack={() => {}} />
+      <div style={{ flex: 1, overflow: "auto" }}>
       {selectedKeyword ? 
       <QnA
         user={"me"}
@@ -123,6 +230,8 @@ const ChattingScreen = () => {
         keywords={keywords}
       />
 }
+<div ref={messagesEndRef} />
+</div>
       <div style={{ position: "fixed", bottom: "0px", width: "100%", backgroundColor: "transparent" }}>
 
         <ExpandableKeywordList
