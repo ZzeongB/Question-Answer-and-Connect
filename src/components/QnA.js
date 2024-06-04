@@ -11,7 +11,7 @@ const Wrapper = styled.main`
   overflow: auto;
   width: 100%;
   background-color: #F5F6F7;
-  padding-bottom: 60px;
+  padding-bottom: 100px;
   
   `;
 
@@ -56,8 +56,6 @@ const QnA = ({ user, messages, keywords }) => {
     acc.push(...questionWithAnswers);
     return acc;
   }, []);
-
-  console.log(groupedMessages)
 
   return (
     <Wrapper>

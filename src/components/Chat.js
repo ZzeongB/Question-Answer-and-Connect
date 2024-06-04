@@ -12,7 +12,7 @@ const Wrapper = styled.main`
   right: 0px;
   overflow: auto;
   width: 100%;
-  padding-bottom: 60px;
+  padding-bottom: 100px;
   background-color: #F5F6F7;
   `;
 
