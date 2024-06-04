@@ -24,11 +24,11 @@ const createColorKeywordDict = (keywords) => {
 };
 
 // Define the Chat component
-const Chat = ({ user, messages, keywords }) => {
+const Chat = ({ user, messages, keywords, messagesEndRef }) => {
   const colorKeywordDict = createColorKeywordDict(keywords);
   return (
     <Wrapper>
-      <div className="chat-messages">
+      <div className="chat-messages" ref={messagesEndRef}>
         {messages && // Check if messages exist
           messages
             //.slice(-20) // Display only the last 20 messages
