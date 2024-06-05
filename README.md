@@ -16,6 +16,12 @@ If you enter a new chat, it will be classified under a keyword in a short time, 
 </p>
 
 ## 🚀 Run it yourself!
+Clone this repository and move to the directory:
+```bash
+git clone https://github.com/ZzeongB/Question-Answer-and-Connect.git
+cd Question-Answer-and-Connect/
+```
+
 If it is your first time, run the command below to install requirements:
 ```bash
 yarn install
@@ -27,7 +33,11 @@ yarn json-server <database> # to import data
 
 # open a new terminal, and
 yarn start # to run application
+# It will ask like 'Would you like to run the app on another port instead?'
+# Press 'y'
 ```
+First command will make the database run in port 3000, and second command will run application in port 3001. If you cannot see the screen, manually open `http://localhost:3001` in the browser.
+
 
 We provde you with example dataset: `shimsugi_final.json`. You can use it by running:
 ```bash
