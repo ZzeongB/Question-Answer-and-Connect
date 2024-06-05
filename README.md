@@ -26,6 +26,19 @@ If it is your first time, run the command below to install requirements:
 ```bash
 yarn install
 ```
+
+Also, to use OpenAI functions, you need to get an API key. Once you have the key, you need to add it to your environment variables. Here's how you can do it:
+
+1. Create a new file in the root directory of the project and name it `.env`.
+
+2. Open the `.env` file and add the following line:
+
+    ```
+    REACT_APP_OPENAI_KEY=Your_OpenAI_Key
+    ```
+
+    Replace `Your_OpenAI_Key` with the key you received.
+
 You need to run two commands in two terminals, one in each.
 Run the following commands for demo:
 ```bash
