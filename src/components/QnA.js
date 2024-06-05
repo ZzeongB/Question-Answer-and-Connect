@@ -22,7 +22,7 @@ const createColorKeywordDict = (keywords) => {
   }, {});
 };
 
-const QnA = ({ user, messages, keywords }) => {
+const QnA = ({ user, messages, keywords, messagesEndRef }) => {
   const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
   const colorKeywordDict = createColorKeywordDict(keywords);
   const handleQuestionClick = (questionId) => {
@@ -59,7 +59,7 @@ const QnA = ({ user, messages, keywords }) => {
 
   return (
     <Wrapper>
-      <div className="chat-messages">
+      <div className="chat-messages" ref={messagesEndRef}>
       {flattenedMessages.map((message, idx) => {
         if (message.is_question && !message.parent_id) {
           const messageColor = colorKeywordDict[message.tag];

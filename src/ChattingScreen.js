@@ -24,11 +24,12 @@ const ChattingScreen = () => {
       messagesEndRef.current?.lastElementChild?.scrollIntoView();
     }
   };
+  
   useEffect(scrollToBottom, []); // add your message list state variable in the dependency array
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, selectedKeyword]);
 
   // Function to fetch chat messages from server
   const fetchMessages = () => {
@@ -247,6 +248,7 @@ const ChattingScreen = () => {
             style={{ flex: 1, overflow: "auto" }}
             messages={filteredMessages}
             keywords={keywords}
+            messagesEndRef={messagesEndRef}
           />
         ) : (
           <Chat
