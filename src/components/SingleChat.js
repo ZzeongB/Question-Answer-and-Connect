@@ -89,12 +89,13 @@ export const SingleChat = ({
   is_question,
   parent_id,
   color,
-  isLoading
+  isLoading,
+  onClick
 }) => {
   const backgroundColor = color ? color : user === "me" ? "#E0E0E0" : "#ffffff";
   if (user === message.User) {
     return (
-      <RightBlock key={index}>
+      <RightBlock key={index} onClick={onClick}>
         <div style={{ display: "flex", flexDirection: "row", justifyContent:"flex-end" }}>
         <NameBlock>{message.User}</NameBlock>
         {message.tag ? (
@@ -111,7 +112,7 @@ export const SingleChat = ({
     );
   }
   return (
-    <LeftBlock key={index}>
+    <LeftBlock key={index} onClick={onClick}>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <NameBlock>{message.User}</NameBlock>
         {message.tag ? (

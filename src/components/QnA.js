@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SingleQnA from "./SingleQnA"; // Ensure this import is correct
 import styled from "styled-components";
 
@@ -22,9 +22,38 @@ const createColorKeywordDict = (keywords) => {
   }, {});
 };
 
-const QnA = ({ user, messages, keywords, messagesEndRef }) => {
+const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMessage}) => {
   const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
+  const [hasRendered, setHasRendered] = useState(false); // State to track if component has rendered
+
   const colorKeywordDict = createColorKeywordDict(keywords);
+
+  useEffect(() => {
+    if (clickedMessage) {
+      const clickedMsg = messages.find(message => message.id === clickedMessage);
+      const parentId = clickedMsg.is_question ? clickedMsg.id : clickedMsg.parent_id;
+      if (parentId && !selectedQuestionIds.includes(parentId)) {
+        setSelectedQuestionIds(prevSelectedIds => [...prevSelectedIds, parentId]);
+      }
+    }
+  }, [clickedMessage, messages]);
+
+
+  useEffect(() => {
+    if (clickedMessage) {
+      const clickedMsg = messages.find(message => message.id === clickedMessage);
+      const parentId = clickedMsg.is_question ? clickedMsg.id : clickedMsg.parent_id;
+      
+      if (parentId && messageRefs.current[parentId].current) {
+        messageRefs.current[parentId].current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [clickedMessage, messageRefs]);
+
+  useEffect(() => {
+    setHasRendered(true);
+  }, []);
+
   const handleQuestionClick = (questionId) => {
     setSelectedQuestionIds((prevSelectedIds) => {
       if (prevSelectedIds.includes(questionId)) {
@@ -64,6 +93,10 @@ const QnA = ({ user, messages, keywords, messagesEndRef }) => {
         if (message.is_question && !message.parent_id) {
           const messageColor = colorKeywordDict[message.tag];
           return (
+            <div
+                  key={message.id}
+                  ref={messageRefs.current[message.id]}
+            >
             <SingleQnA
                 key={message.id}
                 index={idx}
@@ -75,10 +108,15 @@ const QnA = ({ user, messages, keywords, messagesEndRef }) => {
                 color={messageColor}
                 number={groupedMessages[message.id].length-1}
               />
+            </div>
             );
           } else if (selectedQuestionIds.includes(message.parent_id)) {
             const messageColor = colorKeywordDict[message.tag];
             return (
+              <div
+                key={message.id}
+                ref={messageRefs.current[message.id]}
+              >   
               <SingleQnA
                 key={message.id}
                 index={idx}
@@ -88,6 +126,7 @@ const QnA = ({ user, messages, keywords, messagesEndRef }) => {
                 is_question={message.is_question}
                 color={messageColor}
               />
+              </div>
             );
           } else {
               return null;

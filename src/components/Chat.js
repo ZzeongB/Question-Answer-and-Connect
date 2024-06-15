@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SingleChat } from "./SingleChat";
 import styled from "styled-components";
 
@@ -24,8 +24,25 @@ const createColorKeywordDict = (keywords) => {
 };
 
 // Define the Chat component
-const Chat = ({ user, messages, keywords, messagesEndRef }) => {
+const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRefs, clickedMessage}) => {
   const colorKeywordDict = createColorKeywordDict(keywords);
+
+  //const handleClick = (parentId) => {
+    // Scroll to the parent message when clicked
+    //console.log("Parent ID:", parentId);
+  //  if (parentId && messageRefs.current[parentId]) {
+  //    console.log("Scrolling to parent message:", parentId);
+  //    console.log(messageRefs.current[parentId])
+  //    messageRefs.current[parentId].current.scrollIntoView({ behavior: "smooth" });
+  //  }
+  //};
+  useEffect(() => {
+    if (clickedMessage) {
+      if (clickedMessage && messageRefs.current[clickedMessage].current) {
+        messageRefs.current[clickedMessage].current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [clickedMessage, messageRefs]);
   return (
     <Wrapper>
       <div className="chat-messages" ref={messagesEndRef}>
@@ -34,19 +51,27 @@ const Chat = ({ user, messages, keywords, messagesEndRef }) => {
             //.slice(-20) // Display only the last 20 messages
             .map((message, idx) => {
               const messageColor = colorKeywordDict[message.tag];
+              // Initialize ref for each message
 
               // Return a SingleChat component for each message
+              console.log(message.id)
               return (
-                <SingleChat
+                <div
                   key={message.id}
-                  index={idx}
-                  message={message}
-                  user={user}
-                  tag = {message.tag}
-                  is_question = {message.is_question}
-                  parent_id = {message.parent_id}
-                  color={messageColor}
-                />
+                  ref={messageRefs.current[message.id]}
+                >
+                  <SingleChat
+                    key={message.id}
+                    index={idx}
+                    message={message}
+                    user={user}
+                    tag = {message.tag}
+                    is_question = {message.is_question}
+                    parent_id = {message.parent_id}
+                    color={messageColor}
+                    onClick={() => handleClick(message.id, message.tag)} // Handle click
+                  />
+                </div>
               );
             })}
       </div>

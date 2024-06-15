@@ -34,7 +34,7 @@ Also, to use OpenAI functions, you need to get an API key. Once you have the key
 2. Open the `.env` file and add the following line:
 
     ```
-    REACT_APP_OPENAI_KEY=Your_OpenAI_Key
+    REACT_APP_OPENAI_API_KEY=Your_OpenAI_Key
     ```
 
     Replace `Your_OpenAI_Key` with the key you received.

@@ -15,10 +15,12 @@ const ChattingScreen = () => {
   const [messages, setMessages] = useState([]);
   const [recentQ, setrecentQ] = useState([]);
   const [keywords, setKeywords] = useState([]);
+  const [clickedMessage, setClickedMessage] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [apiOutput, setApiOutput] = useState();
   const messagesEndRef = useRef(null);
+  const messageRefs = useRef({});
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current?.lastElementChild?.scrollIntoView();
@@ -28,8 +30,16 @@ const ChattingScreen = () => {
   useEffect(scrollToBottom, []); // add your message list state variable in the dependency array
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, selectedKeyword]);
+     scrollToBottom();
+   }, [messages, selectedKeyword]);
+
+  useEffect(() => {
+    const newRefs = {};
+    messages.forEach((msg) => {
+      newRefs[msg.id] = React.createRef();
+    });
+    messageRefs.current = newRefs;
+  }, [messages]);
 
   // Function to fetch chat messages from server
   const fetchMessages = () => {
@@ -220,6 +230,12 @@ const ChattingScreen = () => {
     }
   };
 
+  const onMessageClick = (messageId, keyword) => {
+    console.log("Message clicked:", messageId);
+    setClickedMessage(messageId);
+    setSelectedKeyword(keyword); // Select the clicked keyword
+  };
+
   // Filter messages based on selected keyword
   const filteredMessages = selectedKeyword
     ? messages.filter(
@@ -249,6 +265,8 @@ const ChattingScreen = () => {
             messages={filteredMessages}
             keywords={keywords}
             messagesEndRef={messagesEndRef}
+            messageRefs={messageRefs}
+            clickedMessage={clickedMessage}
           />
         ) : (
           <Chat
@@ -257,6 +275,9 @@ const ChattingScreen = () => {
             messages={filteredMessages}
             keywords={keywords}
             messagesEndRef={messagesEndRef}
+            handleClick={onMessageClick}
+            messageRefs={messageRefs}
+            clickedMessage={clickedMessage}
           />
         )}
       </div>
