@@ -24,6 +24,7 @@ const ChattingScreen = () => {
   const [showQnA, setShowQnA] = useState(false);
 
   const [showUnanswered, setShowUnanswered] = useState(false);
+  
   const [hideNullTags, setHideNullTags] = useState(false); // New state for toggling visibility
 
   const scrollToBottom = () => {
@@ -59,20 +60,36 @@ const ChattingScreen = () => {
       });
   };
 
-  const fetchRecentQuestions = () => {
-    axios
-      .get("http://localhost:3000/chat")
-      .then((response) => {
-        // Filter messages for is_question true and slice the last 6
-        const questions = response.data
-          .filter((msg) => msg.is_question)
-          .slice(-6);
-        setrecentQ(questions);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch question messages:", error);
-      });
-  };
+  
+  useEffect(() => {
+    // Function to fetch questions based on the current filter or state
+    const fetchQuestionsBasedOnFilter = () => {
+      axios
+        .get("http://localhost:3000/chat")
+        .then((response) => {
+          // Assume response.data is an array of all messages
+          let filteredQuestions = response.data.filter((msg) => {
+            const matchesKeyword = selectedKeyword ? msg.tag === selectedKeyword : true;
+            const isQnA = showQnA ? (msg.is_question || msg.parent_id) : true;
+            const isUnanswered = showUnanswered ? (!msg.parent_id && msg.is_question) : true;
+      
+          
+            return msg.is_question && matchesKeyword && isQnA && isUnanswered&& msg.parent_id==null;
+          });
+  
+          // Assuming you want to limit the number of questions displayed
+          filteredQuestions = filteredQuestions.slice(-6); // Get the last 6 questions based on current filters
+          setrecentQ(filteredQuestions);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch filtered question messages:", error);
+        });
+    };
+  
+    // Call the function when any of the dependencies change
+    fetchQuestionsBasedOnFilter();
+  }, [selectedKeyword, showQnA, showUnanswered]); // Dependencies array includes states that determine filters
+  
 
   const fetchKeywords = () => {
     axios
@@ -89,141 +106,95 @@ const ChattingScreen = () => {
   const onChatSubmit = async (message) => {
     try {
       const keywordNames = Object.keys(keywords);
-      const Questions = recentQ.map(
-        (messageObject) => `${messageObject.id}. ${messageObject.Message}`
-      );
-
-      // Determine the next message ID
-      const maxId =
-        messages.reduce((max, msg) => Math.max(max, parseInt(msg.id, 10)), 0) +
-        1;
-
-      // Initially post the message with temporary values
+      const Questions = recentQ.map((q) => q.Message);
+      const maxId = messages.reduce((max, msg) => Math.max(max, parseInt(msg.id, 10)), 0) + 1;
+  
       const tempMessage = {
-        id: maxId.toString(), // Use the calculated ID
+        id: maxId.toString(),
         User: "me",
         Message: message,
         Date: new Date().toISOString(),
-        is_question: false,
+        is_question: true,
         parent_id: null,
         tag: null,
         isLoading: true,
+        opacity: 1,  // Default opacity
       };
-
-      let initialPostResponse = await axios.post(
-        "http://localhost:3000/chat",
-        tempMessage
-      );
+  
+      console.log(selectedKeyword);
+      let initialPostResponse = await axios.post("http://localhost:3000/chat", tempMessage);
       setMessages((prevMessages) => [
         ...prevMessages,
         initialPostResponse.data,
       ]);
-
-      // Call API to get response details
-      const apiResponse = await handleRequest(message, keywordNames, Questions);
+  
+      // Start fading out the message
+      setMessages(prevMessages =>
+        prevMessages.map(msg =>
+          msg.id === initialPostResponse.data.id ? { ...msg, opacity: 0 } : msg
+        )
+      );
+  
+      const formattedRecentQ = recentQ.map(q => `${q.id}. ${q.Message}`).join("\n");
+      console.log("Formatted Recent Questions", formattedRecentQ);
+  
+      const apiResponse = await handleRequest(message, keywordNames, formattedRecentQ);
       console.log("API output", apiResponse, keywordNames);
-
+  
       let isQuestion = false;
       let tag = null;
       let parentId = null;
-
-      if (apiResponse.startsWith("Q, ")) {
-        isQuestion = true;
-        tag = apiResponse.split("Q, ")[1];
+  
+      if (apiResponse.startsWith("NA")) {
+        // Handle NA case
+      } else if (apiResponse.startsWith("Q, ")) {
+        const responseDetails = apiResponse.split("Q, ")[1];
+        isQuestion = responseDetails !== "NA";
+        tag = responseDetails;
       } else if (apiResponse.startsWith("A, ")) {
         const parentIdFromAPI = apiResponse.split("A, ")[1];
         const parentMessage = recentQ.find((m) => m.id === parentIdFromAPI);
-
         if (parentMessage) {
-          parentId = parentMessage.parent_id
-            ? parentMessage.parent_id
-            : parentIdFromAPI;
+          parentId = parentMessage.parent_id ? parentMessage.parent_id : parentIdFromAPI;
           tag = parentMessage.tag;
         }
       }
-
-      // Update the message on the server with new details including all fields
+  
       const fullUpdateData = {
-        User: tempMessage.User, // Re-include original data for safety
-        Message: tempMessage.Message, // Re-include original data for safety
-        Date: tempMessage.Date, // Re-include original data for safety
+        User: tempMessage.User,
+        Message: tempMessage.Message,
+        Date: tempMessage.Date,
         isLoading: false,
         is_question: isQuestion,
         parent_id: parentId,
         tag: tag,
+        opacity: 1  // Reset opacity for updated message
       };
-
-      const updateResponse = await axios.put(
-        `http://localhost:3000/chat/${initialPostResponse.data.id}`,
-        fullUpdateData
-      );
-
+  
+      const updateResponse = await axios.put(`http://localhost:3000/chat/${initialPostResponse.data.id}`, fullUpdateData);
+  
       // Update local state with the new message details
-      setMessages((prevMessages) =>
-        prevMessages.map((msg) =>
-          msg.id === initialPostResponse.data.id
-            ? { ...msg, ...updateResponse.data }
-            : msg
+      setMessages(prevMessages =>
+        prevMessages.map(msg =>
+          msg.id === initialPostResponse.data.id ? { ...msg, ...updateResponse.data } : msg
         )
       );
-
-      if (isQuestion && !keywordNames.includes(tag)) {
-        const newKeyword = {
-          backgroundColor: getNextTab10Color(),
-          textColor: "#000000",
-        };
-
-        // Update the keywords object in your local state or context
-        keywords[tag] = newKeyword;
-
-        // Prepare the object in the format expected by the server
-        const keywordData = {
-          [tag]: newKeyword,
-        };
-
-        // Post the new keyword to the server
-        await axios
-          .post("http://localhost:3000/keyword", keywordData)
-          .then((response) => {
-            console.log("Keyword added:", response.data);
-          })
-          .catch((error) => {
-            console.error("Error adding keyword:", error);
-          });
-      }
-
+  
       setApiOutput(apiResponse);
-      fetchRecentQuestions();
+  
     } catch (error) {
       console.error("Error in onChatSubmit:", error);
     }
   };
+  
 
-  let lastColorIndex = 0;
-
-  function getNextTab10Color() {
-    const colors = [
-      "#1f77b4",
-      "#ff7f0e",
-      "#2ca02c",
-      "#d62728",
-      "#9467bd",
-      "#8c564b",
-      "#e377c2",
-      "#7f7f7f",
-      "#bcbd22",
-      "#17becf",
-    ];
-    const currentColorIndex = lastColorIndex % colors.length;
-    lastColorIndex += 1; // Increment the index for next use
-    return colors[currentColorIndex];
-  }
+  
 
   // Fetch messages when component mounts
   useEffect(() => {
     fetchMessages();
     fetchKeywords();
-    fetchRecentQuestions();
+
   }, []);
 
   // Handle keyword click
@@ -236,7 +207,7 @@ const ChattingScreen = () => {
   };
 
   const onMessageClick = (messageId, keyword) => {
-    console.log("Message clicked:", messageId);
+    
     setClickedMessage(messageId);
     setSelectedKeyword(keyword); // Select the clicked keyword
   };
@@ -251,10 +222,10 @@ const ChattingScreen = () => {
 
     // Updated filtering logic for messages
     filteredMessages = messages.filter(message => {
+      const isTempMessage = message.isLoading; // Check if the message is loading
       const matchesKeyword = selectedKeyword ? message.tag === selectedKeyword : true;
       const isQnA = showQnA ? (message.is_question || message.parent_id) : true;
-      // const isUnanswered = showUnanswered ? (!message.parent_id && message.is_question) : true;
-      return matchesKeyword && isQnA;
+      return (matchesKeyword && isQnA) || isTempMessage; // Include temp messages in any case
     });
 
   // Render the chat screen
