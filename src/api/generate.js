@@ -5,37 +5,95 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-async function handleRequest(message, keywords, questions) {
-  let formattedKeywords = keywords.join('\n');
-  let formattedQuestions = questions.join('\n');
+async function handleRequest(message, keywords, formattedQuestions) {
   
-  let system_prompt = '"'+message+'"' + 
-    "\nYou are tasked to Classify this message if it is asking question or not a question. \nIf it is a question, then using these keywords:\n" + 
-    formattedKeywords + 
-    "\n give me the closest keyword that relates to the question. If you think it REALLY doesnt fit any of the keywords, give me a new keyword with one or two phrases that tries to relate to the topic of Math. ONLY if the question doesnt relate to math/Science at all, name it Miscellaneous.\n" +
-    "If it is not a question and an answer, then using these recent questions:\n" + 
-    formattedQuestions + 
-    "\nGive me the closest question with the identification number that relates to the answer. This is ran through the automatic script so ONLY give me ONE answer with the given FORMAT. \n" +
-    "EX: How do I preform Gradient Descent\nQ, Optimization and Gradient Descent\nGradient Descent is done easily.\nA, (ID of that question)\nWhat is the weather like today\nQ,Miscellaneous\(ID of that question).\nThe weather is sunny today \nA, 1020\nTell me about NiN network, GoogLeNet\nQ, Networks and GoogLeNet (new keyword)\nONLY GIVE THE ANSWER IN THIS FORMAT 'NO OTHER TEXT ALLOWED':(Q/A), (keyword/ID can of the recent questions))\n";
-  
-  
-  console.log("System Prompt:", system_prompt);
+  console.log("Received message:", message);
+  console.log("Formatted Questions:", formattedQuestions);
+
+  let classificationPrompt = `You are tasked to classify a message: is it asking a question or not? Label 'Q' if it is a question and 'A' if it is an answer. If it can NEVER be an answer or Question (like a mistype) give me NA. ONLY give me the answer in one of the following Q, A, or NA\n Message: "${message}"\n` +
+  'Examples:\n' +
+  '\n Message: html로 바꾸고 인쇄에서 pdf로 저장 한 것도 인정 되나요? \n' +
+  'Q\n' +
+  'Message: py 파일 옆에 pdf 파일 안에 1-5번 다 있을 겁니다 (inside the pdf file attached next to .py files)\n' +
+  'A\n';
+
+  console.log("Classification Prompt:", classificationPrompt);
 
   try {
-    const res = await openai.chat.completions.create({
-      model: "gpt-4-turbo", // Make sure the model name is correct
-      messages: [
-        { role: "user", content: system_prompt }  // User's actual message
-      ],
+    const classification = await openai.chat.completions.create({
+      model: "gpt-4-turbo", // Note: This should be "gpt-4-turbo" unless "gpt-4o" is a specific model version
+      messages: [{ role: "user", content: classificationPrompt }],
     });
 
-    if (res && res.choices && res.choices.length > 0 && res.choices[0].message) {
-      const answer = res.choices[0].message.content;
-      console.log("Extracted message:", answer);
-      return answer;
-    } else {
-      console.log("No valid response or message content found in GPT-4 response");
-      return null;
+    console.log("Classification Response:", classification.choices[0].message.content);
+
+    let responseType = classification && classification.choices && classification.choices.length > 0
+      ? classification.choices[0].message.content.trim()
+      : null;
+
+    console.log("Response Type:", responseType);
+
+    if (responseType === "Q") {
+      // If it's a question, find the closest keyword
+      let keywords = [
+        "Course Logistics",
+        "Lecture Content",
+        "HW: Submission Standards-HW5",
+        "HW: Coding Implementation-HW5",
+        "HW: Mathematical Theories and Proofs-HW5",
+        "HW: Grades and Inquiries-HW5"
+      ];
+      let formattedKeywords = keywords.join(", "); // Join keywords into a single string separated by commas
+      
+      let keywordPrompt = `"Message: ${message}"\nChoose the keyword that best matches the topic of the message from the following list:\n${formattedKeywords}\n If it doesnt fit any of the keyword, label it NA ONLY give me the answer as a single word ` +
+      'Examples:\n' +
+      'Message: "How do I submit my assignment?"\nHW: Submission Standards-HW5 \n' +
+      'Message: "What was covered in the last lecture?"\nLecture Content \n' +
+      'Message: "Can you explain the proof of this theorem in problem 2?"\nHW: Mathematical Theories and Proofs-HW5\n'+
+      'Message: "양태현은 길쭉하지않아?"\nNA\n';
+
+
+
+      const keywordResponse = await openai.chat.completions.create({
+        model: "gpt-4-turbo",
+        messages: [{ role: "user", content: keywordPrompt }],
+      });
+
+      console.log("Keyword Response:", keywordResponse.choices);
+
+      let keywordMatch = keywordResponse && keywordResponse.choices && keywordResponse.choices.length > 0
+        ? keywordResponse.choices[0].message.content.trim()
+        : "No keyword found";
+
+      console.log(`Q, ${keywordMatch}`);
+      return `Q, ${keywordMatch}`;
+
+    } else if (responseType === "A") {
+      // If it's an answer, find the closest previous question
+      let questionPrompt = `\nTry to match an answer to the appropriate question and pick out of these questions:\n${formattedQuestions}\n ONLY give the answer in a single number that best links our answer to a question \n Answer: ${message}'\n` +
+      'Examples:\n' +
+      'Message: The deadline was set for next Friday.\n1\n' +
+      'Message: You can find all lecture materials on the course website.\n530\n';
+
+      console.log("Question Prompt:", questionPrompt);
+
+      const questionResponse = await openai.chat.completions.create({
+        model: "gpt-4-turbo",
+        messages: [{ role: "user", content: questionPrompt }],
+      });
+
+      console.log("Question Response:", questionResponse.choices);
+
+      let questionMatch = questionResponse && questionResponse.choices && questionResponse.choices.length > 0
+        ? questionResponse.choices[0].message.content.trim()
+        : "No question ID found";
+
+      console.log(`A, ${questionMatch}`);
+      return `A, ${questionMatch}`;
+    } 
+    else {
+      
+      return "NA";
     }
   } catch (error) {
     console.error("Error fetching data from OpenAI:", error);
