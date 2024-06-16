@@ -12,7 +12,7 @@ const HeaderWrapper = styled.header`
   justify-content: space-between; // Keep this to manage space between elements
   padding: 0 10px;
   box-sizing: border-box;
-  background-color: #F5F6F7;
+  background-color: #f5f6f7;
   z-index: 1000; // Ensure it's on top
 
   & span {
@@ -28,8 +28,8 @@ const HeaderWrapper = styled.header`
     flex-direction: column; // Stack switches vertically
     align-items: flex-end; // Align switches to the right
     position: absolute;
-    right: 10px; // Place it on the far right
-    top: 5px; // Adjust top for vertical centering
+    right: 20px; // Place it on the far right
+    top: 15px; // Adjust top for vertical centering
   }
 
   & .switch label {
@@ -39,50 +39,63 @@ const HeaderWrapper = styled.header`
     font-size: 12px;
     margin-bottom: 5px;
   }
-  
+
   & .switch label:last-child {
     margin-bottom: 0;
   }
-  
 `;
 
-const Header = ({ roomName, onBack, selectedKeyword, showQnA, setShowQnA, showUnanswered, setShowUnanswered }) => {
+const Header = ({
+  roomName,
+  onBack,
+  selectedKeyword,
+  showQnA,
+  setShowQnA,
+  showUnanswered,
+  setShowUnanswered,
+}) => {
   return (
     <HeaderWrapper>
       <span>{roomName}</span>
       {
-      <div className="switch">
-        {!selectedKeyword && (
-          <label>
-            Show Q&A:
-            <Switch
-              onChange={setShowQnA}
-              checked={showQnA}
-              handleDiameter={20}
-              height={14} 
-              width={28}
-              offColor="#888"
-              onColor="#0e0"
-              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-              activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-            />
-          </label>
-        )}
-        <label>
-          Show Unanswered Q:
-          <Switch
-            onChange={setShowUnanswered}
-            checked={showUnanswered}
-            handleDiameter={20}
-            height={14} 
-            width={28}
-            offColor="#888"
-            onColor="#0e0"
-            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-          />
-        </label>
-      </div>
+        <div className="switch">
+          {!selectedKeyword && (
+            <label>
+              Show Q&A
+              <Switch
+                onChange={setShowQnA}
+                checked={showQnA}
+                handleDiameter={14}
+                height={14}
+                width={28}
+                offColor="#888"
+                onColor="#80e27e"
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                uncheckedIcon={false}
+                checkedIcon={false}
+              />
+            </label>
+          )}
+          {selectedKeyword && (
+            <label>
+              Unanswered Questions
+              <Switch
+                onChange={setShowUnanswered}
+                checked={showUnanswered}
+                handleDiameter={14}
+                height={14}
+                width={28}
+                offColor="#888"
+                onColor="#80e27e"
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                uncheckedIcon={false}
+                checkedIcon={false}
+              />
+            </label>
+          )}
+        </div>
       }
     </HeaderWrapper>
   );

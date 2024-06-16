@@ -253,8 +253,8 @@ const ChattingScreen = () => {
     filteredMessages = messages.filter(message => {
       const matchesKeyword = selectedKeyword ? message.tag === selectedKeyword : true;
       const isQnA = showQnA ? (message.is_question || message.parent_id) : true;
-      const isUnanswered = showUnanswered ? (!message.parent_id && message.is_question) : true;
-      return matchesKeyword && isQnA && isUnanswered;
+      // const isUnanswered = showUnanswered ? (!message.parent_id && message.is_question) : true;
+      return matchesKeyword && isQnA;
     });
 
   // Render the chat screen
@@ -287,6 +287,7 @@ const ChattingScreen = () => {
             messagesEndRef={messagesEndRef}
             messageRefs={messageRefs}
             clickedMessage={clickedMessage}
+            showUnanswered={showUnanswered}
           />
         ) : (
           <Chat

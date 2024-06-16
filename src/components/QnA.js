@@ -22,7 +22,7 @@ const createColorKeywordDict = (keywords) => {
   }, {});
 };
 
-const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMessage}) => {
+const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMessage, showUnanswered}) => {
   const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
   const [hasRendered, setHasRendered] = useState(false); // State to track if component has rendered
 
@@ -89,7 +89,7 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
   return (
     <Wrapper>
       <div className="chat-messages" ref={messagesEndRef}>
-      {flattenedMessages.map((message, idx) => {
+      {!showUnanswered && flattenedMessages.map((message, idx) => {
         if (message.is_question && !message.parent_id) {
           const messageColor = colorKeywordDict[message.tag];
           return (
@@ -137,6 +137,33 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
               return null;
             }
           })}
+      {
+        showUnanswered && flattenedMessages.map((message, idx) => {
+          if (message.is_question && !message.parent_id && groupedMessages[message.id].length === 1) {
+            const messageColor = colorKeywordDict[message.tag];
+            return (
+              <div
+                    key={message.id}
+                    ref={messageRefs.current[message.id]}
+              >
+              <SingleQnA
+                  key={message.id}
+                  index={idx}
+                  message={message}
+                  user={user}
+                  tag={message.tag}
+                  is_question={message.is_question}
+                  onClick={() => handleQuestionClick(message.id)}
+                  color={messageColor}
+                  number={groupedMessages[message.id].length-1}
+                  clickedMessage={clickedMessage}
+                  messageId={message.id}
+                />
+              </div>
+              );
+            } 
+        })
+      }
       </div>
     </Wrapper>
   );
