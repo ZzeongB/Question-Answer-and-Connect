@@ -5,14 +5,16 @@ const KeywordsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: ${(props) => (props.$expanded ? "wrap" : "nowrap")};
-  width: 100%;
-  background-color: rgb(0, 0, 0, 0.1);
+  width: calc(100% - 40px);
+  background-color: "transparent";
   cursor: pointer;
   height: auto;
   overflow: ${(props) => (props.$expanded ? "visible" : "auto")};
   transition: height 0.3s ease-in-out;
   scrollbar-width: none; // Hide scrollbar for Firefox
+  paddingright: 50px; // Add padding to the right
 `;
+
 const Keyword = styled.div`
   box-sizing: border-box; // Correct property
   padding: 10px;
@@ -38,32 +40,67 @@ const ExpandableKeywordList = ({
   selectedKeyword,
 }) => {
   return (
-    <KeywordsWrapper
-      $expanded={expanded}
-      onClick={() => {
-        //console.log("expanding");
-        setExpanded(!expanded);
+    <div
+      style={{
+        // 두 개 component를 감싸는 div의 style, 두 개 component가 row로, 겹치지 않게 나열되게
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "transparent",
+        padding: "0px",
+        backgroundColor: "rgb(0, 0, 0, 0.1)",
       }}
     >
-      {Object.entries(keywords).map(([key, value]) => {
-        
-        return (
-          <Keyword
-            key={key}
-            $backgroundColor={value.backgroundColor}
-            $textColor={value.textColor}
-            onClick={(event) => {
-              event.stopPropagation(); // Add this line
-              onKeywordClick(key);
-            }}
-            style={{ border: (key===selectedKeyword)? "2px solid black": "2px solid transparent" }} // add border inside the keyword
-
-          >
-            # {key}
-          </Keyword>
-        );
-      })}
-    </KeywordsWrapper>
+      <KeywordsWrapper
+        $expanded={expanded}
+        onClick={() => {
+          //console.log("expanding");
+          setExpanded(!expanded);
+        }}
+      >
+        {Object.entries(keywords).map(([key, value]) => {
+          return (
+            <Keyword
+              key={key}
+              $backgroundColor={value.backgroundColor}
+              $textColor={value.textColor}
+              onClick={(event) => {
+                event.stopPropagation(); // Add this line
+                onKeywordClick(key);
+              }}
+              style={{
+                border:
+                  key === selectedKeyword
+                    ? "2px solid black"
+                    : "2px solid transparent",
+              }} // add border inside the keyword
+            >
+              # {key}
+            </Keyword>
+          );
+        })}
+      </KeywordsWrapper>
+      <div
+        style={{
+          position: "absolute",
+          right: "0px",
+          bottom: "90px",
+          width: "30px",
+          height: "30px",
+        }}
+        onClick={() => setExpanded(!expanded)} // Toggles the expanded state
+      >
+        <img
+          src={expanded ? "download.png" : "upload.png"}
+          style={{
+            width: "20px",
+            height: "20px",
+            backgroundColor: "transparent",
+          }}
+          alt={expanded ? "Collapse" : "Expand"} // Descriptive alternative text
+          />
+      </div>
+    </div>
   );
 };
 
