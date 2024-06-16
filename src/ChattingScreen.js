@@ -21,17 +21,22 @@ const ChattingScreen = () => {
   const [apiOutput, setApiOutput] = useState();
   const messagesEndRef = useRef(null);
   const messageRefs = useRef({});
+  const [showQnA, setShowQnA] = useState(false);
+
+  const [showUnanswered, setShowUnanswered] = useState(false);
+  const [hideNullTags, setHideNullTags] = useState(false); // New state for toggling visibility
+
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current?.lastElementChild?.scrollIntoView();
     }
   };
-  
+
   useEffect(scrollToBottom, []); // add your message list state variable in the dependency array
 
   useEffect(() => {
-     scrollToBottom();
-   }, [messages, selectedKeyword]);
+    scrollToBottom();
+  }, [messages, selectedKeyword]);
 
   useEffect(() => {
     const newRefs = {};
@@ -235,16 +240,22 @@ const ChattingScreen = () => {
     setClickedMessage(messageId);
     setSelectedKeyword(keyword); // Select the clicked keyword
   };
-
-
   // Filter messages based on selected keyword
-  const filteredMessages = selectedKeyword
+  let filteredMessages = selectedKeyword
     ? messages.filter(
         (message) => {
           return message.tag && message.tag === selectedKeyword;
         } // match data type
       )
     : messages;
+
+    // Updated filtering logic for messages
+    filteredMessages = messages.filter(message => {
+      const matchesKeyword = selectedKeyword ? message.tag === selectedKeyword : true;
+      const isQnA = showQnA ? (message.is_question || message.parent_id) : true;
+      const isUnanswered = showUnanswered ? (!message.parent_id && message.is_question) : true;
+      return matchesKeyword && isQnA && isUnanswered;
+    });
 
   // Render the chat screen
   return (
@@ -257,7 +268,15 @@ const ChattingScreen = () => {
         flex: 1,
       }}
     >
-      <Header roomName={"Chatroom"} onBack={() => {}} />
+      <Header
+        roomName="Chatroom"
+        onBack={() => {}}
+        selectedKeyword={selectedKeyword}
+        showQnA={showQnA}
+        setShowQnA={setShowQnA}
+        showUnanswered={showUnanswered}
+        setShowUnanswered={setShowUnanswered}
+      />{" "}
       <div style={{ overflow: "auto" }}>
         {selectedKeyword ? (
           <QnA
