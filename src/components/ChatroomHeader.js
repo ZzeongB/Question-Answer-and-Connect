@@ -26,10 +26,10 @@ const HeaderWrapper = styled.header`
   & .switch {
     display: flex;
     flex-direction: column; // Stack switches vertically
-    align-items: flex-end; // Align switches to the right
+    // align-items: flex-end; // Align switches to the right
     position: absolute;
     right: 20px; // Place it on the far right
-    top: 15px; // Adjust top for vertical centering
+    // top: 15px; // Adjust top for vertical centering
   }
 
   & .switch label {
@@ -60,8 +60,20 @@ const Header = ({
       {
         <div className="switch">
           {!selectedKeyword && (
-            <label>
-              Show Q&A
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',    
+              height:'14px'
+            }}>
+              <div
+                style={{
+                  marginRight: '7px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  top: '50%',
+                }}
+              >QnA only</div>
               <Switch
                 onChange={setShowQnA}
                 checked={showQnA}
@@ -75,11 +87,23 @@ const Header = ({
                 uncheckedIcon={false}
                 checkedIcon={false}
               />
-            </label>
+            </div>
           )}
           {selectedKeyword && (
-            <label>
-              Unanswered Questions
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',    
+              height:'14px'
+            }}>
+              <div
+                style={{
+                  marginRight: '7px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  top: '50%',
+                }}
+              >Unanswered Q</div>
               <Switch
                 onChange={setShowUnanswered}
                 checked={showUnanswered}
@@ -93,7 +117,7 @@ const Header = ({
                 uncheckedIcon={false}
                 checkedIcon={false}
               />
-            </label>
+            </div>
           )}
         </div>
       }
