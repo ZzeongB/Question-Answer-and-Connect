@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ChatWrapper = styled.div`
@@ -15,6 +15,7 @@ const ChatWrapper = styled.div`
   border-color: ${(props) => props.color || "#ffffff"};
   background-color: ${(props) =>
     props.color ? `${props.color}4D` : "#ffffff4D"};
+  box-shadow: ${(props) => props.isHighlighted ? '0 0 10px #ffa500' : 'none'};
 `;
 
 const BaseBlock = styled.div`
@@ -61,11 +62,25 @@ const SingleQnA = ({
   onClick,
   color,
   number,
-}) => {
-  const isUserMessage = user === message.User;
+  clickedMessage,
+  messageId,
 
+}) => {
   const MessageBlock = is_question ? LeftBlock : RightBlock;
   const backgroundColor = is_question ? color : "#E0E0E0";
+  const [isHighlighted, setIsHighlighted] = useState(clickedMessage === messageId);
+
+  useEffect(() => {
+    console.log("isHighlighted", isHighlighted, clickedMessage, messageId)
+    if (isHighlighted) {
+      // erase the highlight after 1 second
+      setTimeout(() => {
+        setIsHighlighted(false);
+      }, 2000);
+    }
+  }
+  , [isHighlighted]);
+  
 
   return (
     <MessageBlock
@@ -74,7 +89,7 @@ const SingleQnA = ({
       style={{ cursor: is_question ? "pointer" : "default" }}
     >
       <NameBlock>{message.User}</NameBlock>
-      <ChatWrapper color={backgroundColor}>
+      <ChatWrapper color={backgroundColor} isHighlighted={isHighlighted}>
         {message.Message}
         {number? tag && <TagBlock>{number}개의 답변</TagBlock>: <></>}
       </ChatWrapper>

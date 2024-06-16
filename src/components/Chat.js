@@ -54,7 +54,6 @@ const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRe
               // Initialize ref for each message
 
               // Return a SingleChat component for each message
-              console.log(message.id)
               return (
                 <div
                   key={message.id}

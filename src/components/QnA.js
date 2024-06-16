@@ -31,7 +31,7 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
   useEffect(() => {
     if (clickedMessage) {
       const clickedMsg = messages.find(message => message.id === clickedMessage);
-      const parentId = clickedMsg.is_question ? clickedMsg.id : clickedMsg.parent_id;
+      const parentId = (clickedMsg?.is_question && !clickedMsg?.parent_id) ? clickedMsg?.id : clickedMsg?.parent_id;
       if (parentId && !selectedQuestionIds.includes(parentId)) {
         setSelectedQuestionIds(prevSelectedIds => [...prevSelectedIds, parentId]);
       }
@@ -42,7 +42,7 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
   useEffect(() => {
     if (clickedMessage) {
       const clickedMsg = messages.find(message => message.id === clickedMessage);
-      const parentId = clickedMsg.is_question ? clickedMsg.id : clickedMsg.parent_id;
+      const parentId = (clickedMsg?.is_question && !clickedMsg?.parent_id) ? clickedMsg?.id : clickedMsg?.parent_id;
       
       if (parentId && messageRefs.current[parentId].current) {
         messageRefs.current[parentId].current.scrollIntoView({ behavior: "smooth" });
@@ -107,6 +107,8 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
                 onClick={() => handleQuestionClick(message.id)}
                 color={messageColor}
                 number={groupedMessages[message.id].length-1}
+                clickedMessage={clickedMessage}
+                messageId={message.id}
               />
             </div>
             );
@@ -125,6 +127,9 @@ const QnA = ({ user, messages, keywords, messagesEndRef, messageRefs, clickedMes
                 tag={message.tag}
                 is_question={message.is_question}
                 color={messageColor}
+                clickedMessage={clickedMessage}
+                messageId=  {message.id}
+
               />
               </div>
             );
