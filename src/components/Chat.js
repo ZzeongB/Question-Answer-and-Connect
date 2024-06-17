@@ -16,6 +16,23 @@ const Wrapper = styled.main`
   background-color: #F5F6F7;
   `;
 
+const TopBar = styled.div`
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: white;
+  overflow-x: auto; // Allows horizontal scrolling if tags overflow
+  white-space: nowrap; // Prevents tags from wrapping
+`;
+
+
 const createColorKeywordDict = (keywords) => {
   return Object.entries(keywords).reduce((acc, [key, value]) => {
     acc[key] = value.backgroundColor;
@@ -26,6 +43,8 @@ const createColorKeywordDict = (keywords) => {
 // Define the Chat component
 const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRefs, clickedMessage}) => {
   const colorKeywordDict = createColorKeywordDict(keywords);
+  const observer = useRef(null);
+  const [visibleTags, setVisibleTags] = useState(new Set());
 
   //const handleClick = (parentId) => {
     // Scroll to the parent message when clicked
@@ -43,7 +62,47 @@ const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRe
       }
     }
   }, [clickedMessage, messageRefs]);
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const messageTag = entry.target.getAttribute('data-tag');
+          if (entry.isIntersecting) {
+            setVisibleTags((prevTags) => new Set([...prevTags, messageTag]));
+          } else {
+            setVisibleTags((prevTags) => {
+              const updatedTags = new Set(prevTags);
+              updatedTags.delete(messageTag);
+              return updatedTags;
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentObserver = observer.current;
+
+    messages.forEach((message) => {
+      if (messageRefs.current[message.id] && messageRefs.current[message.id].current) {
+        currentObserver.observe(messageRefs.current[message.id].current);
+      }
+    });
+
+    return () => {
+      currentObserver.disconnect();
+    };
+  }, [messages, messageRefs]);
+
   return (
+    <>
+    <TopBar>
+        Visible Tags:
+        {Array.from(visibleTags).map((tag, index) => (
+          <span key={index} style={{ marginLeft: '10px' }}>{tag}</span>
+        ))}
+      </TopBar>
     <Wrapper>
       <div className="chat-messages" ref={messagesEndRef}>
         {messages && // Check if messages exist
@@ -58,6 +117,8 @@ const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRe
                 <div
                   key={message.id}
                   ref={messageRefs.current[message.id]}
+                  data-id={message.id}
+                  data-tag={message.tag}
                 >
                   <SingleChat
                     key={message.id}
@@ -75,6 +136,7 @@ const Chat = ({ user, messages, keywords, messagesEndRef, handleClick, messageRe
             })}
       </div>
     </Wrapper>
+    </>
   );
 };
 
